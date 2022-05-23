@@ -2,8 +2,6 @@ import { useState } from "react"
 import Stepper from "../../components/registrationForm/Stepper"
 import StepperControl from "../../components/registrationForm/StepperControl"
 import { UseContextProvider } from "./contexs/StepperContext"
-import Account from "../../components/registrationForm/steps/EnterEmail"
-import Details from "../../components/registrationForm/steps/EnterOTP"
 import Payment from "../../components/registrationForm/steps/EnterPassword"
 import Final from "../../components/registrationForm/steps/Final"
 import "./registrationForm.css"
@@ -21,10 +19,6 @@ function RegistrationForm() {
 
   const displayStep = (step) => {
     switch (step) {
-      case 1:
-        return <Account />
-      case 2:
-        return <Details />
       case 3:
         return <Payment />
       case 4:
