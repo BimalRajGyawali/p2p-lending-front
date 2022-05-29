@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 
 export default function OtpField() {
@@ -9,6 +10,8 @@ export default function OtpField() {
   const [otpErrorMsg, setOtpErrorMsg] = useState("");
   const [btnText, setBtnText] = useState("NEXT");
   const [serverErrorMsg, setServerErrorMsg] = useState("");
+
+  const email = useSelector(state => state.user.email);
 
   const navigate = useNavigate();
 
@@ -23,7 +26,7 @@ export default function OtpField() {
   };
 
   const handleNextClick = (e) => {
-    const email = "gyawali.rajbimal35@gmail.com"
+   
     if(!otp){
       setOtpErrorMsg("Invalid otp");
       return;
@@ -61,7 +64,7 @@ export default function OtpField() {
         <div className="h-6 mt-3 text-xs font-bold leading-8 text-gray-500 uppercase">
           Verification
         </div>
-        <p className="my-1">An OTP is sent to your email. Please enter it here.</p>
+        <p className="my-1">An OTP is sent to your email. Please enter it here. {email}</p>
         <div className="flex p-1 my-2 bg-white border border-gray-200 rounded">
           <input
             onChange={handleChange}

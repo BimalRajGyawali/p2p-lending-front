@@ -1,10 +1,13 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 
 export default function PasswordField() {
-  const email = "gyawali.rajbimal35@gmail.com";
+  const email = useSelector(state => state.user.email);
+  const role = useSelector(state => state.user.role);
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [btnText, setBtnText] = useState("NEXT");
@@ -46,7 +49,10 @@ export default function PasswordField() {
       return;
     }
 
-    axios.post("http://localhost:8081/api/v1/createBorrower", {email, password})
+    const URL = role === "BORROWER" ? "http://localhost:8081/api/v1/createBorrower" :
+    "http://localhost:8081/api/v1/createInvestor";
+
+    axios.post(URL, {email, password})
     .then(res => {
       console.log(res.data);
       navigate("/");

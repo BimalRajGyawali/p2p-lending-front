@@ -4,9 +4,12 @@ import EmailField from "./components/registrationForm/steps/EmailField"
 import RegistrationPage from "./pages/RegistrationPage"
 import OtpField from "./components/registrationForm/steps/OtpField"
 import PasswordField from "./components/registrationForm/steps/PasswordField"
+import { Provider } from "react-redux"
+import store from "./components/store/Store"
 
 const App = () => {
   return (
+    <Provider store={store}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />
@@ -17,6 +20,7 @@ const App = () => {
         </Route>
       </Routes>
     </BrowserRouter>  
+    </Provider>
   )
 }
 
