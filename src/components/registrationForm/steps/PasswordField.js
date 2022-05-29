@@ -3,38 +3,53 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
-export default function OtpField() {
-
-  const [otp, setOtp] = useState("");
-  const [otpErrorMsg, setOtpErrorMsg] = useState("");
+export default function PasswordField() {
+  const email = "gyawali.rajbimal35@gmail.com";
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [btnText, setBtnText] = useState("NEXT");
+
+  const [passwordErrorMsg, setPasswordErrorMsg] = useState("");
   const [serverErrorMsg, setServerErrorMsg] = useState("");
 
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
     setServerErrorMsg("");
-    setOtp(e.target.value);
-    if(!e.target.value){
-      setOtpErrorMsg("Invalid otp");
+
+    if(confirmPassword && confirmPassword !== e.target.value){
+      setPasswordErrorMsg("Passwords didnot match");
     }else{
-      setOtpErrorMsg("");
+      setPasswordErrorMsg("");
     }
-  };
+    
+  }
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    setServerErrorMsg("");
+
+    if(password !== e.target.value){
+      setPasswordErrorMsg("Passwords didnot match");
+    }else{
+      setPasswordErrorMsg("");
+    }
+  }
+
+  const handleBackClick = (e) => {
+    navigate("/register/otp");
+  }
 
   const handleNextClick = (e) => {
-    const email = "gyawali.rajbimal35@gmail.com"
-    if(!otp){
-      setOtpErrorMsg("Invalid otp");
+    if(passwordErrorMsg){
       return;
     }
 
-    setBtnText("Loading...")
-
-    axios.post("http://localhost:8081/api/v1/verifyEmailOTP", {email, otp})
+    axios.post("http://localhost:8081/api/v1/createBorrower", {email, password})
     .then(res => {
       console.log(res.data);
-      navigate("/register/password");
+      navigate("/");
     })
     .catch(err => {
       console.log(err.response.data.error);
@@ -46,35 +61,50 @@ export default function OtpField() {
       }
       
   })
+
+
   }
 
-  const handleBackClick = (e) => {
-    navigate("/register");
-  }
-
+ 
   return (
     <div className="pb-2 mx-auto bg-white shadow-xl rounded-2xl md:w-1/2">
     <div className="container p-10 my-20">
     <div className="flex flex-col ">
       <div className="flex-1 w-full mx-2">
+        <p>OTP verified successfully. Now, set a password !</p>
       <p className="mb-4 text-red-500">{serverErrorMsg}</p>
         <div className="h-6 mt-3 text-xs font-bold leading-8 text-gray-500 uppercase">
-          Verification
+          Set Password
         </div>
-        <p className="my-1">An OTP is sent to your email. Please enter it here.</p>
         <div className="flex p-1 my-2 bg-white border border-gray-200 rounded">
           <input
-            onChange={handleChange}
-            value={otp}
-            name="OTP"
-            placeholder="Enter OTP"
-            autoComplete="on"
-            type="text"
+            onChange={handlePasswordChange}
+            value={password}
+            name="password"
+            placeholder="Password"
+            type="password"
             className="w-full p-1 px-2 text-gray-800 outline-none appearance-none"
           />
         </div>
-        <p className="mb-4 text-red-500">{otpErrorMsg}</p>
-        <button
+      </div>
+      <div className="flex-1 w-full mx-2">
+        <div className="h-6 mt-3 text-xs font-bold leading-8 text-gray-500 uppercase">
+          Retype Password
+        </div>
+        <div className="flex p-1 my-2 bg-white border border-gray-200 rounded">
+          <input
+            onChange={handleConfirmPasswordChange}
+            value={confirmPassword}
+            name="confirmPassword"
+            placeholder="Password"
+            type="password"
+            className="w-full p-1 px-2 text-gray-800 outline-none appearance-none"
+          />
+        </div>
+
+        <p className="mb-4 text-red-500">{passwordErrorMsg}</p>
+      
+      <button
               onClick={() => handleBackClick()}
               className="px-4 py-2 mt-2 mr-2 font-semibold text-white uppercase transition duration-200 ease-in-out bg-gray-500 rounded-lg cursor-pointer hover:bg-slate-700 hover:text-white"
             >
@@ -87,7 +117,7 @@ export default function OtpField() {
             >
               {btnText}
             </button>
-      </div>
+    </div>
     </div>
     </div>
     </div>

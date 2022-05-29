@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage"
 import EmailField from "./components/registrationForm/steps/EmailField"
 import RegistrationPage from "./pages/RegistrationPage"
 import OtpField from "./components/registrationForm/steps/OtpField"
+import PasswordField from "./components/registrationForm/steps/PasswordField"
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
         <Route path="/register" element={<RegistrationPage />}>
           <Route path="" element={<EmailField />} /> 
           <Route path="otp" element={<OtpField />} /> 
+          <Route path="password" element={<PasswordField />} />
         </Route>
       </Routes>
     </BrowserRouter>  
