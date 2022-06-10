@@ -50,7 +50,6 @@ const Login = () => {
                           Login
                         </CButton>
                       </CCol>
-
                     </CRow>
                   </CForm>
                 </CCardBody>
@@ -60,8 +59,8 @@ const Login = () => {
                   <div>
                     <h2>Sign up</h2>
                     <p>
-                      Be a borrower for hassle free loan with best interest rates.
-                      Be a lender for lending at higher rates.
+                      Be a borrower for hassle free loan with best interest rates. Be a lender for
+                      lending at higher rates.
                     </p>
                     <Link to="/register">
                       <CButton color="primary" className="mt-3" active tabIndex={-1}>

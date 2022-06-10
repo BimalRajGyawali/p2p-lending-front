@@ -47,15 +47,15 @@ export default function PasswordField() {
     if (passwordErrorMsg) {
       return
     }
-    if(!password || !confirmPassword){
-      setPasswordErrorMsg("Invalid password")
-      return;
+    if (!password || !confirmPassword) {
+      setPasswordErrorMsg('Invalid password')
+      return
     }
     if (password !== confirmPassword) {
       setPasswordErrorMsg('Passwords didnot match')
-      return;
+      return
     }
-    navigate("/login")
+    navigate('/login')
 
     const URL =
       role === 'BORROWER'

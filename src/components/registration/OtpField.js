@@ -1,8 +1,6 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux'
-import React from 'react'
+import { useSelector } from 'react-redux'
 
 export default function OtpField() {
   const [otp, setOtp] = useState('')

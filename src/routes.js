@@ -15,9 +15,9 @@ import {
   Tooltips,
 } from './views/base'
 import Accordion from './views/base/spinners/Spinners'
+import Spinners from './views/base/spinners/Spinners'
 import Placeholders from './views/base/placeholders/Placeholders'
 import Progress from './views/base/progress/Progress'
-import Spinners from './views/base/spinners/Spinners'
 import Tables from './views/base/tables/Tables'
 import { ButtonGroups, Buttons } from './views/buttons'
 import Charts from './views/charts/Charts'
@@ -32,10 +32,7 @@ import { Brands, CoreUIIcons, Flags } from './views/icons'
 import { Alerts, Badges, Modals } from './views/notifications'
 import Toasts from './views/notifications/toasts/Toasts'
 import Widgets from './views/widgets/Widgets'
-
-const Kyc = () => {
-  return <h2>Kyc</h2>
-}
+import KycForm from './components/kyc/KycForm'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -83,7 +80,7 @@ const routes = [
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
 
-  { path: '/kyc', name: 'Kyc', element: Kyc },
+  { path: '/kyc', name: 'Kyc', element: KycForm },
 ]
 
 export default routes
