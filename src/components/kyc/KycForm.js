@@ -1,31 +1,9 @@
-import { CButton, CCol, CForm, CFormInput, CFormSelect } from '@coreui/react'
+import { CButton, CCol, CForm, CFormInput, CFormSelect, CSpinner } from '@coreui/react'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const KycForm = () => {
-  const address = (address, index) => {
-    if (!address) return ''
-
-    if (address.split(',').length < index + 1) return ''
-
-    return address.split(',')[index]
-  }
-
-  const handleInputChange = (key, e) => {
-    setKyc({ ...kyc, [key]: e.target.value })
-  }
-
-  const handleTempAddressChange = (key, e) => {
-    setTempAddr({ ...tempAddr, [key]: e.target.value })
-  }
-
-  const handlePermanentAddressChange = (key, e) => {
-    setTempAddr({ ...permanentAddr, [key]: e.target.value })
-  }
-
-  const handleContactChange = (key, e) => {
-    setContact({ ...contact, [key]: e.target.value })
-  }
+  const [submitting, setSubmitting] = useState(false)
 
   const [tempAddr, setTempAddr] = useState({
     district: '',
@@ -59,13 +37,50 @@ const KycForm = () => {
     citizenShipNumber: '',
     dob: '',
     maritalStatus: '',
+    verificationStatus: '',
   })
+
+  const [citizenShipFront, setCitizenShipFront] = useState(null)
+  const [citizenShipBack, setCitizenShipBack] = useState(null)
+
+  const address = (address, index) => {
+    if (!address) return ''
+
+    if (address.split(',').length < index + 1) return ''
+
+    return address.split(',')[index]
+  }
+
+  const handleInputChange = (key, e) => {
+    setKyc({ ...kyc, [key]: e.target.value })
+  }
+
+  const handleTempAddressChange = (key, e) => {
+    setTempAddr({ ...tempAddr, [key]: e.target.value })
+  }
+
+  const handlePermanentAddressChange = (key, e) => {
+    setPermanentAddr({ ...permanentAddr, [key]: e.target.value })
+  }
+
+  const handleContactChange = (key, e) => {
+    setContact({ ...contact, [key]: e.target.value })
+  }
+
+  const handleCitizenShipFront = (e) => {
+    setCitizenShipFront(e.target.files[0])
+  }
+
+  const handleCitizenShipBack = (e) => {
+    setCitizenShipBack(e.target.files[0])
+  }
+
   useEffect(() => {
     console.log('hello')
 
     axios
       .post('http://localhost:8081/api/v1/getKYC', {
-        email: 'zignuyospo@vusra.com',
+        email: 'bimal@gmail.com',
       })
       .then((res) => {
         console.log(res.data.data)
@@ -79,6 +94,7 @@ const KycForm = () => {
           citizenShipNumber: res.data.data.citizenShipNumber,
           dob: res.data.data.dob,
           maritalStatus: res.data.data.maritalStatus,
+          verificationStatus: res.data.data.verificationStatus,
         })
         setTempAddr({
           ...tempAddr,
@@ -96,10 +112,10 @@ const KycForm = () => {
         })
         setContact({
           ...contact,
-          primaryMobile: res.data.data.primaryMobile,
-          secondaryMobile: res.data.data.secondaryMobile,
-          telephone: res.data.data.telephone,
-          otherEmail: res.data.data.otherEmail,
+          primaryMobile: res.data.data.contact.primaryMobile,
+          secondaryMobile: res.data.data.contact.secondaryMobile,
+          telephone: res.data.data.contact.telephone,
+          otherEmail: res.data.data.contact.otherEmail,
         })
       })
       .catch((err) => {
@@ -107,13 +123,50 @@ const KycForm = () => {
       })
   }, [])
 
+  const submitKycForm = () => {
+    setSubmitting(true)
+    console.log(kyc)
+    console.log(tempAddr)
+    console.log(permanentAddr)
+    console.log(contact)
+
+    let formData = new FormData()
+    formData.append('permanentAddress', JSON.stringify(permanentAddr))
+    formData.append('temporaryAddress', JSON.stringify(tempAddr))
+    formData.append('contact', JSON.stringify(contact))
+    formData.append('firstName', kyc.firstName)
+    formData.append('middleName', kyc.middleName)
+    formData.append('lastName', kyc.lastName)
+    formData.append('dob', kyc.dob)
+    formData.append('gender', kyc.gender)
+    formData.append('citizenShipNumber', kyc.citizenShipNumber)
+    formData.append('maritalStatus', kyc.maritalStatus)
+    formData.append('citizenShipPhotoFront', citizenShipFront)
+    formData.append('citizenShipPhotoBack', citizenShipBack)
+    formData.append('email', 'bimal@gmail.com')
+
+    axios({
+      method: 'post',
+      url: 'http://localhost:8081/registerKYC',
+      data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        console.log(response)
+        setSubmitting(false)
+        alert('Kyc submitted successfully')
+      })
+      .catch(function (response) {
+        console.log(response)
+        setSubmitting(false)
+        alert('Error in submitting Kyc')
+      })
+  }
+
   return (
     <CForm className="row g-3">
+      {kyc.verificationStatus && <p>Kyc Verification Status: {kyc.verificationStatus}</p>}
       <h2 style={{ fontWeight: 'bold' }}>Personal Information</h2>
-      <p>{JSON.stringify(kyc)}</p>
-      <p>{JSON.stringify(tempAddr)}</p>
-      <p>{JSON.stringify(permanentAddr)}</p>
-      <p>{JSON.stringify(contact)}</p>
       <CCol md={4}>
         <CFormInput
           type="text"
@@ -195,6 +248,8 @@ const KycForm = () => {
           <option selected={permanentAddr.province === 'Province 3'}>Province 3</option>
           <option selected={permanentAddr.province === 'Province 4'}>Province 4</option>
           <option selected={permanentAddr.province === 'Province 5'}>Province 5</option>
+          <option selected={permanentAddr.province === 'Province 6'}>Province 6</option>
+          <option selected={permanentAddr.province === 'Province 7'}>Province 7</option>
         </CFormSelect>
       </CCol>
       <CCol md={3}>
@@ -244,6 +299,8 @@ const KycForm = () => {
           <option selected={tempAddr.province === 'Province 3'}>Province 3</option>
           <option selected={tempAddr.province === 'Province 4'}>Province 4</option>
           <option selected={tempAddr.province === 'Province 5'}>Province 5</option>
+          <option selected={tempAddr.province === 'Province 6'}>Province 6</option>
+          <option selected={tempAddr.province === 'Province 7'}>Province 7</option>
         </CFormSelect>
       </CCol>
       <CCol md={3}>
@@ -314,23 +371,60 @@ const KycForm = () => {
       <div className="mt-5" />
 
       <h2 style={{ fontWeight: 'bold' }}>Citizenship</h2>
+
       <CCol md={3}>
-        <CFormInput type="file" id="citizenshipFront" label="Front" />
+        <CFormInput
+          type="text"
+          id="citizenShipNumber"
+          label="CitizenShip Number"
+          value={kyc.citizenShipNumber}
+          onChange={(e) => handleInputChange('citizenShipNumber', e)}
+        />
+      </CCol>
+      <CCol md={3}>
+        <CFormInput
+          type="file"
+          id="citizenshipFront"
+          label="Front"
+          onChange={handleCitizenShipFront}
+        />
       </CCol>
 
       <CCol md={3}>
-        <CFormInput type="file" id="citizenshipBack" label="Back" />
+        <CFormInput
+          type="file"
+          id="citizenshipBack"
+          label="Back"
+          onChange={handleCitizenShipBack}
+        />
       </CCol>
 
       <div className="mt-4" />
 
       <CCol xs={12}>
-        <CButton className="mb-3" style={{ background: 'navy' }} type="submit">
-          Submit
-        </CButton>
+        {submitting ? (
+          <CButton
+            disabled={true}
+            className="mb-3"
+            style={{ background: 'navy' }}
+            type="submit"
+            onClick={submitKycForm}
+          >
+            <CSpinner component="span" size="sm" />
+            &nbsp;Submitting
+          </CButton>
+        ) : (
+          <CButton
+            className="mb-3"
+            style={{ background: 'navy' }}
+            type="submit"
+            onClick={submitKycForm}
+          >
+            Submit
+          </CButton>
+        )}
       </CCol>
     </CForm>
   )
 }
-
 export default KycForm
