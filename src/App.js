@@ -22,7 +22,6 @@ class App extends Component {
       <HashRouter>
         <Suspense fallback={loading}>
           <Routes>
-            {/*<Route exact path="/" name="Login Page" element={<Login />} />*/}
             <Route exact path="/login" name="Login Page" element={<Login />} />
             <Route path="/register" name="Register Page" element={<Register />}>
               <Route path="" element={<EmailField />} />
@@ -32,7 +31,6 @@ class App extends Component {
             <Route exact path="/500" name="Page 500" element={<Page500 />} />
             <Route path="/404" name="Page 404" element={<Page404 />} />
             <Route exact path="*" name="Home" element={<DefaultLayout />} />
-
           </Routes>
         </Suspense>
       </HashRouter>

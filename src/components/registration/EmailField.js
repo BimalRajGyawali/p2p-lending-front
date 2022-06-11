@@ -5,7 +5,7 @@ import React from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import userSlice from '../../slices/userSlice'
-import { CFormCheck } from "@coreui/react";
+import { CFormCheck } from '@coreui/react'
 
 export default function EmailField() {
   const storedEmail = useSelector((state) => state.user.email || '')
@@ -52,25 +52,25 @@ export default function EmailField() {
     setBtnText('Loading...')
     console.log('Loading')
     dispatch(userSlice.actions.setEmail(email))
-        dispatch(userSlice.actions.setRole(role))
+    dispatch(userSlice.actions.setRole(role))
     navigate('/register/otp')
 
-      // axios
-      //   .post('http://localhost:8081/api/v1/sendEmailOTP', { email })
-      //   .then((res) => {
-      //     console.log(res.data)
-      //     dispatch(userSlice.actions.setEmail(email))
-      //     dispatch(userSlice.actions.setRole(role))
-      //     navigate('/register/otp')
-      //   })
-      //   .catch((err) => {
-      //     setBtnText('NEXT')
-      //     if (err.response.data && err.response.data.error) {
-      //       setServerErrorMsg(err.response.data.error)
-      //     } else {
-      //       setServerErrorMsg('Something went wrong')
-      //     }
-      //   })
+    // axios
+    //   .post('http://localhost:8081/api/v1/sendEmailOTP', { email })
+    //   .then((res) => {
+    //     console.log(res.data)
+    //     dispatch(userSlice.actions.setEmail(email))
+    //     dispatch(userSlice.actions.setRole(role))
+    //     navigate('/register/otp')
+    //   })
+    //   .catch((err) => {
+    //     setBtnText('NEXT')
+    //     if (err.response.data && err.response.data.error) {
+    //       setServerErrorMsg(err.response.data.error)
+    //     } else {
+    //       setServerErrorMsg('Something went wrong')
+    //     }
+    //   })
   }
 
   return (
@@ -84,8 +84,26 @@ export default function EmailField() {
               Register As
             </div>
 
-            <CFormCheck style={{display: 'inline'}} onChange={handleRoleChange} type="radio" name="role" id="borrower" label="Borrower" value="BORROWER" defaultChecked={role === "BORROWER"}/>
-            <CFormCheck style={{display: 'inline'}} onChange={handleRoleChange} type="radio" name="role" id="lender" label="Lender" value="LENDER" defaultChecked={role === "LENDER"}/>
+            <CFormCheck
+              style={{ display: 'inline' }}
+              onChange={handleRoleChange}
+              type="radio"
+              name="role"
+              id="borrower"
+              label="Borrower"
+              value="BORROWER"
+              defaultChecked={role === 'BORROWER'}
+            />
+            <CFormCheck
+              style={{ display: 'inline' }}
+              onChange={handleRoleChange}
+              type="radio"
+              name="role"
+              id="lender"
+              label="Lender"
+              value="LENDER"
+              defaultChecked={role === 'LENDER'}
+            />
             <p className="mt-2 mb-4 text-red-500">{roleErrorMsg}</p>
 
             <div className="h-6 mt-5 text-xs font-bold leading-8 text-gray-500 uppercase">
