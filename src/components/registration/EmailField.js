@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import React from 'react'
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -53,24 +53,23 @@ export default function EmailField() {
     console.log('Loading')
     dispatch(userSlice.actions.setEmail(email))
     dispatch(userSlice.actions.setRole(role))
-    navigate('/register/otp')
 
-    // axios
-    //   .post('http://localhost:8081/api/v1/sendEmailOTP', { email })
-    //   .then((res) => {
-    //     console.log(res.data)
-    //     dispatch(userSlice.actions.setEmail(email))
-    //     dispatch(userSlice.actions.setRole(role))
-    //     navigate('/register/otp')
-    //   })
-    //   .catch((err) => {
-    //     setBtnText('NEXT')
-    //     if (err.response.data && err.response.data.error) {
-    //       setServerErrorMsg(err.response.data.error)
-    //     } else {
-    //       setServerErrorMsg('Something went wrong')
-    //     }
-    //   })
+    axios
+      .post('http://localhost:8081/registration/sendEmailOTP', { email })
+      .then((res) => {
+        console.log(res.data)
+        dispatch(userSlice.actions.setEmail(email))
+        dispatch(userSlice.actions.setRole(role))
+        navigate('/register/otp')
+      })
+      .catch((err) => {
+        setBtnText('NEXT')
+        if (err.response.data && err.response.data.error) {
+          setServerErrorMsg(err.response.data.error)
+        } else {
+          setServerErrorMsg('Something went wrong')
+        }
+      })
   }
 
   return (
@@ -78,6 +77,9 @@ export default function EmailField() {
       <div className="container p-10 my-20">
         <div className="flex flex-col ">
           <div className="flex-1 w-full mx-2">
+            <p>
+              Already have an account ? <Link to={'/login'}>Login Here</Link>
+            </p>
             <p className="mb-4 text-red-500">{serverErrorMsg}</p>
 
             <div className="h-6 mt-3 text-xs font-bold leading-8 text-gray-500 uppercase">

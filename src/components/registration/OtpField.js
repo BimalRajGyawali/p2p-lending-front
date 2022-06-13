@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import axios from 'axios'
 
 export default function OtpField() {
   const [otp, setOtp] = useState('')
@@ -29,23 +30,22 @@ export default function OtpField() {
     }
 
     setBtnText('Loading...')
-    navigate('/register/password')
 
-    // axios
-    //   .post('http://localhost:8081/api/v1/verifyEmailOTP', { email, otp })
-    //   .then((res) => {
-    //     console.log(res.data)
-    //     navigate('/register/password')
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response.data.error)
-    //     setBtnText('NEXT')
-    //     if (err.response.data.error) {
-    //       setServerErrorMsg(err.response.data.error)
-    //     } else {
-    //       setServerErrorMsg('Something went wrong')
-    //     }
-    //   })
+    axios
+      .post('http://localhost:8081/registration/verifyEmailOTP', { email, otp })
+      .then((res) => {
+        console.log(res.data)
+        navigate('/register/password')
+      })
+      .catch((err) => {
+        console.log(err.response.data.error)
+        setBtnText('NEXT')
+        if (err.response.data.error) {
+          setServerErrorMsg(err.response.data.error)
+        } else {
+          setServerErrorMsg('Something went wrong')
+        }
+      })
   }
 
   const handleBackClick = (e) => {

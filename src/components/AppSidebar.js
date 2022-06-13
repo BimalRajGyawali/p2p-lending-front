@@ -9,13 +9,18 @@ import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
 
 // sidebar nav config
-import navigation from '../_nav'
+import borrowerNav from '../_nav'
+import lenderNav from '../_lender_nav'
 
 const AppSidebar = () => {
+  let navigation = borrowerNav
   const dispatch = useDispatch()
   const unfoldable = useSelector((state) => state.sidebarUnfoldable)
   const sidebarShow = useSelector((state) => state.sidebarShow)
-
+  const role = localStorage.getItem('role')
+  if (role === 'LENDER') {
+    navigation = lenderNav
+  }
   return (
     <CSidebar
       position="fixed"

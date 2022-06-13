@@ -22,7 +22,7 @@ export default function PasswordField() {
     setServerErrorMsg('')
 
     if (confirmPassword && confirmPassword !== e.target.value) {
-      setPasswordErrorMsg('Passwords didnot match')
+      setPasswordErrorMsg('Passwords did not match')
     } else {
       setPasswordErrorMsg('')
     }
@@ -33,7 +33,7 @@ export default function PasswordField() {
     setServerErrorMsg('')
 
     if (password !== e.target.value) {
-      setPasswordErrorMsg('Passwords didnot match')
+      setPasswordErrorMsg('Passwords did not match')
     } else {
       setPasswordErrorMsg('')
     }
@@ -52,31 +52,30 @@ export default function PasswordField() {
       return
     }
     if (password !== confirmPassword) {
-      setPasswordErrorMsg('Passwords didnot match')
+      setPasswordErrorMsg('Passwords did not match')
       return
     }
-    navigate('/login')
 
     const URL =
       role === 'BORROWER'
-        ? 'http://localhost:8081/api/v1/createBorrower'
-        : 'http://localhost:8081/api/v1/createInvestor'
+        ? 'http://localhost:8081/registration/createBorrower'
+        : 'http://localhost:8081/registration/createInvestor'
 
-    // axios
-    //   .post(URL, { email, password })
-    //   .then((res) => {
-    //     console.log(res.data)
-    //     navigate('/')
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response.data.error)
-    //     setBtnText('NEXT')
-    //     if (err.response.data.error) {
-    //       setServerErrorMsg(err.response.data.error)
-    //     } else {
-    //       setServerErrorMsg('Something went wrong')
-    //     }
-    //   })
+    axios
+      .post(URL, { email, password })
+      .then((res) => {
+        console.log(res.data)
+        navigate('/login')
+      })
+      .catch((err) => {
+        console.log(err.response.data.error)
+        setBtnText('NEXT')
+        if (err.response.data.error) {
+          setServerErrorMsg(err.response.data.error)
+        } else {
+          setServerErrorMsg('Something went wrong')
+        }
+      })
   }
 
   return (
