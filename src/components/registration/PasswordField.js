@@ -59,7 +59,7 @@ export default function PasswordField() {
     const URL =
       role === 'BORROWER'
         ? 'http://localhost:8081/registration/createBorrower'
-        : 'http://localhost:8081/registration/createInvestor'
+        : 'http://localhost:8081/registration/createLender'
 
     axios
       .post(URL, { email, password })
