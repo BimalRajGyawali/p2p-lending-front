@@ -76,11 +76,9 @@ const KycForm = () => {
   }
 
   useEffect(() => {
-    console.log('hello')
-
     axios
       .post('http://localhost:8081/api/v1/getKYC', {
-        email: 'bimal@gmail.com',
+        email: localStorage.getItem('email'),
       })
       .then((res) => {
         console.log(res.data.data)

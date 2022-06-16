@@ -29,14 +29,12 @@ const Login = () => {
 
   const handleLogin = () => {
     axios
-      .post('http://localhost:8081/login', { email: username, password, role: 'INVESTOR' })
+      .post('http://localhost:8081/authenticate', { email: username, password })
       .then((res) => {
         console.log(res.data)
         localStorage.setItem('accessToken', res.data.data.token)
-        const decoded = jwtDecode(res.data.data.token)
-        console.log(decoded)
-        localStorage.setItem('username', username)
-        localStorage.setItem('role', 'LENDER')
+        localStorage.setItem('email', username)
+        localStorage.setItem('role', res.data.data.role)
         navigate('/')
       })
       .catch((err) => {
