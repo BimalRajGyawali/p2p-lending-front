@@ -17,12 +17,6 @@ import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 const _lender_nav = [
   {
     component: CNavItem,
-    name: 'Kyc',
-    to: '/lenderKyc',
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-  },
-  {
-    component: CNavItem,
     name: 'Loan Suggestions',
     to: '/loanSuggestions',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,

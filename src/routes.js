@@ -33,6 +33,8 @@ import { Alerts, Badges, Modals } from './views/notifications'
 import Toasts from './views/notifications/toasts/Toasts'
 import Widgets from './views/widgets/Widgets'
 import KycForm from './components/kyc/KycForm'
+import LoanSuggestionList from './components/lendingSuggestions/LoanSuggestionList'
+import LoanSuggestionItem from './components/lendingSuggestions/LoanSuggestionItem'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -81,6 +83,8 @@ const routes = [
   { path: '/widgets', name: 'Widgets', element: Widgets },
 
   { path: '/kyc', name: 'Kyc', element: KycForm },
+  { path: '/loanSuggestions', name: 'Loan Suggestions', element: LoanSuggestionList },
+  { path: '/singleSuggestion', name: 'Loan Suggestion', element: LoanSuggestionItem },
 ]
 
 export default routes
