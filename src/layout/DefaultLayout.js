@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { AppContent, AppSidebar, AppFooter, AppHeader } from '../components/index'
+import { AppContent, AppFooter, AppHeader, AppSidebar } from '../components/index'
 import { useNavigate } from 'react-router-dom'
 
 const DefaultLayout = () => {

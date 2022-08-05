@@ -41,7 +41,18 @@ const AppHeaderDropdown = () => {
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-        <CAvatar src={avatar8} size="md" />
+        <div
+          style={{
+            borderRadius: '50%',
+            backgroundColor: 'navy',
+            color: 'white',
+            height: '30px',
+            width: '30px',
+            textAlign: 'center',
+          }}
+        >
+          {localStorage.getItem('email') && localStorage.getItem('email').charAt(0).toUpperCase()}
+        </div>
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownItem href="#">
