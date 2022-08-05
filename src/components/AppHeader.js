@@ -34,6 +34,7 @@ const AppHeader = () => {
           <CIcon icon={logo} height={48} alt="Logo" />
         </CHeaderBrand>
         <CHeaderNav className="ms-3">
+          <p style={{ marginRight: '10px' }}>{localStorage.getItem('role')}</p>
           <AppHeaderDropdown />
         </CHeaderNav>
       </CContainer>

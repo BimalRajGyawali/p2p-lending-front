@@ -34,6 +34,8 @@ import Toasts from './views/notifications/toasts/Toasts'
 import Widgets from './views/widgets/Widgets'
 import KycForm from './components/kyc/KycForm'
 import LoanRequestPage from './components/loanRequest/LoanRequestPage'
+import LoanSuggestionList from './components/lendingSuggestions/LoanSuggestionList'
+import LoanSuggestionItem from './components/lendingSuggestions/LoanSuggestionItem'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -84,6 +86,8 @@ const routes = [
   { path: '/kyc', name: 'Kyc', element: KycForm },
 
   { path: '/loanRequest', name: 'LoanRequest', element: LoanRequestPage },
+  { path: '/loanSuggestions', name: 'Loan Suggestions', element: LoanSuggestionList },
+  { path: '/singleSuggestion', name: 'Loan Suggestion', element: LoanSuggestionItem },
 ]
 
 export default routes
