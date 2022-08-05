@@ -20,7 +20,7 @@ const LoanRequestForm = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: 'http://192.168.15.104:8082/api/v1/getAllLoanTypes',
+      url: 'http://localhost:8082/api/v1/getAllLoanTypes',
       data: {},
       headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
     })
@@ -42,17 +42,10 @@ const LoanRequestForm = () => {
   }
 
   function handleForm(e) {
-    console.log(
-      JSON.stringify({
-        duration: loanDuration,
-        amount: loanAmount,
-        borrower: localStorage.getItem('email'),
-        loanType,
-      }),
-    )
+    e.preventDefault()
     axios({
       method: 'post',
-      url: 'http://192.168.15.104:8082/api/v1/createLoan',
+      url: 'http://localhost:8082/api/v1/createLoan',
       headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
       data: {
         duration: loanDuration,
@@ -63,7 +56,7 @@ const LoanRequestForm = () => {
     })
       .then((res) => {
         console.log(res)
-        alert('form succesfully submitted')
+        alert('Loan Requested successfully')
       })
       .catch((err) => {
         console.log(err)

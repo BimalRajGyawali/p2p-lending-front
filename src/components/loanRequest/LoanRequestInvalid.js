@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 
 import { CAlert } from '@coreui/react'
-const LoanRequestInvalid = () => {
+// eslint-disable-next-line react/prop-types
+const LoanRequestInvalid = ({ message }) => {
   return (
     <>
-      <CAlert color="info">
-        Sorry You Cannot Request Loan. You Already Have Applied For Loan.
-      </CAlert>
+      <CAlert color="info">Sorry You Cannot Request Loan. {message}</CAlert>
     </>
   )
 }

@@ -6,21 +6,36 @@ import axios from 'axios'
 
 const LoanRequestPage = () => {
   const [showForm, setShowForm] = useState(true)
+  const [reason, setReason] = useState('')
+  const [previousLoans, setPreviousLoans] = useState([])
 
-  const [loanType, setLoanType] = useState('')
-  const [loanDuration, setLoanDuration] = useState('')
-  const [loanAmount, setLoanAmount] = useState(0)
-  //
-  // useEffect(() => {
-  //   axios.post()
-  // })
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8081/api/v1/borrower/isEligible/${localStorage.getItem('email')}`,
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    }).then((res) => {
+      setShowForm(res.data.data.eligible)
+      if (res.data.data.reasonForIneligibility) setReason(res.data.data.reasonForIneligibility)
+    })
+
+    axios({
+      method: 'get',
+      url: `http://localhost:8082/api/v1/borrower/findAllLoan/${localStorage.getItem('email')}`,
+      headers: { Authorization: `Bearer ${localStorage.getItem('accessToken')}` },
+    }).then((res) => {
+      setPreviousLoans(res.data.data)
+    })
+  }, [])
 
   return (
     <>
-      {showForm ? <LoanRequestForm /> : <LoanRequestInvalid />} <hr />
-      <div style={{ padding: '20px' }}>
-        <LoanRequestTable />
-      </div>
+      {showForm ? <LoanRequestForm /> : <LoanRequestInvalid message={reason} />} <hr />
+      {previousLoans.length > 0 && (
+        <div style={{ padding: '20px' }}>
+          <LoanRequestTable loans={previousLoans} />
+        </div>
+      )}
     </>
   )
 }
