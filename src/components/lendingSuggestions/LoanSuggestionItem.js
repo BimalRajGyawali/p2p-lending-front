@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { CButton, CCard, CCardBody, CCardText, CCardTitle, CFormInput } from '@coreui/react'
 import BackImg from 'src/assets/images/back-button.png'
@@ -15,6 +15,9 @@ const LoanSuggestionItem = () => {
     setLendingAmount(e.target.value)
     setLoadingAmount(parseInt(e.target.value) - walletBalance)
   }
+  useEffect(() => {
+    console.log(location.state)
+  }, [])
 
   return (
     <>
@@ -40,8 +43,8 @@ const LoanSuggestionItem = () => {
               <p>Requested: Rs. {location.state.loanAmount.toLocaleString('en-US')}</p>
               <p>Remaining: Rs. {location.state.remainingAmount.toLocaleString('en-US')}</p>
               <p style={{ marginTop: '20px' }}>
-                Lending Available from Rs. {location.state.lendingRangeMin.toLocaleString('en-US')}{' '}
-                to Rs. {location.state.lendingRangeMax.toLocaleString('en-US')}
+                Lending Available from Rs. {location.state.minLendingAmount.toLocaleString('en-US')}{' '}
+                to Rs. {location.state.maxLendingAmount.toLocaleString('en-US')}
               </p>
               <div style={{ marginTop: '20px' }}>
                 <p style={{ display: 'inline', marginRight: '10px' }}>
@@ -55,9 +58,9 @@ const LoanSuggestionItem = () => {
                   id="lending-amount"
                   name="lending-amount"
                   value={lendingAmount}
-                  placeholder={`${location.state.lendingRangeMin.toLocaleString(
+                  placeholder={`${location.state.minLendingAmount.toLocaleString(
                     'en-US',
-                  )} - ${location.state.lendingRangeMax.toLocaleString('en-US')}`}
+                  )} - ${location.state.maxLendingAmount.toLocaleString('en-US')}`}
                 />
               </div>
               <CButton style={{ backgroundColor: 'navy' }} className="mt-3" active tabIndex={-1}>

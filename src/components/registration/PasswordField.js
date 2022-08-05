@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import React from 'react'
+import userSlice from '../../slices/userSlice'
 
 export default function PasswordField() {
   const email = useSelector((state) => state.user.email)
@@ -16,6 +17,7 @@ export default function PasswordField() {
   const [serverErrorMsg, setServerErrorMsg] = useState('')
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value)
@@ -65,6 +67,8 @@ export default function PasswordField() {
       .post(URL, { email, password })
       .then((res) => {
         console.log(res.data)
+        dispatch(userSlice.actions.setEmail(''))
+        dispatch(userSlice.actions.setRole(''))
         navigate('/login')
       })
       .catch((err) => {
