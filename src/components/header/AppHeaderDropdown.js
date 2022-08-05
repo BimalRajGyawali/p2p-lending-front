@@ -30,6 +30,7 @@ const AppHeaderDropdown = () => {
 
   const handleLogout = (e) => {
     e.preventDefault()
+    console.log('logout')
     localStorage.setItem('email', '')
     localStorage.setItem('role', '')
     localStorage.setItem('accessToken', '')
@@ -40,18 +41,18 @@ const AppHeaderDropdown = () => {
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
-        <p
+        <div
           style={{
+            borderRadius: '50%',
             backgroundColor: 'navy',
             color: 'white',
-            borderRadius: '50%',
-            width: '30px',
             height: '30px',
+            width: '30px',
             textAlign: 'center',
           }}
         >
-          {localStorage.getItem('email').charAt(0).toUpperCase()}
-        </p>
+          {localStorage.getItem('email') && localStorage.getItem('email').charAt(0).toUpperCase()}
+        </div>
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownItem href="#">
