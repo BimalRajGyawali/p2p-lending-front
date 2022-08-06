@@ -36,7 +36,11 @@ const LoanSuggestionItem = () => {
     setLoadingAmount(parseInt(e.target.value) - walletBalance)
 
     setLendingErrorMsg('')
-    loadingAmount > 0 && setShowLoadWalletButton(true)
+
+    if (parseInt(e.target.value) - walletBalance > 0) {
+      setShowLoadWalletButton(true)
+      setShowLoadWalletButton(true)
+    }
   }
 
   const fetchWalletBalance = () => {
@@ -50,7 +54,7 @@ const LoanSuggestionItem = () => {
   }
   useEffect(() => {
     fetchWalletBalance().then((res) => {
-      setWalletBalance(res.data.data)
+      setWalletBalance(parseFloat(res.data.data))
     })
   }, [])
 
@@ -69,7 +73,7 @@ const LoanSuggestionItem = () => {
         },
       })
         .then((res) => {
-          setWalletBalance(res.data.data)
+          setWalletBalance(parseFloat(res.data.data))
           setLoadWalletButtonLoading(false)
           setShowLoadWalletButton(false)
         })
