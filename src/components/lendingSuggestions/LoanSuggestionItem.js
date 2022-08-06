@@ -2,20 +2,80 @@ import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { CButton, CCard, CCardBody, CCardText, CCardTitle, CFormInput } from '@coreui/react'
 import BackImg from 'src/assets/images/back-button.png'
+import axios from 'axios'
 
 // eslint-disable-next-line react/prop-types
 const LoanSuggestionItem = () => {
   const [walletBalance, setWalletBalance] = useState(0)
   const [loadingAmount, setLoadingAmount] = useState(0)
   const [lendingAmount, setLendingAmount] = useState('')
+  const [showLoadWalletButton, setShowLoadWalletButton] = useState(true)
+  const [loadWalletButtonLoading, setLoadWalletButtonLoading] = useState(false)
+  const [lendingErrorMsg, setLendingErrorMsg] = useState('')
 
   const location = useLocation()
 
   const handleLendingAmountChange = (e) => {
     setLendingAmount(e.target.value)
+
+    if (
+      e.target.value > location.state.maxLendingAmount ||
+      e.target.value < location.state.minLendingAmount
+    ) {
+      setLendingErrorMsg(
+        `Lending Amount should be in range of ${location.state.minLendingAmount} and ${location.state.maxLendingAmount}`,
+      )
+      return
+    }
+    if (parseInt(e.target.value) % 5000 !== 0) {
+      setLendingErrorMsg('Lending Amount should be multiple of Rs. 5,000')
+      return
+    }
+    setLendingErrorMsg('')
     setLoadingAmount(parseInt(e.target.value) - walletBalance)
+    loadingAmount > 0 && setShowLoadWalletButton(true)
   }
-  useEffect(() => {}, [])
+
+  const fetchWalletBalance = () => {
+    return axios({
+      method: 'get',
+      url: 'http://localhost:8083/api/v1/wallet/getBalance',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+  }
+  useEffect(() => {
+    fetchWalletBalance().then((res) => {
+      setWalletBalance(res.data.data)
+    })
+  }, [])
+
+  const loadWallet = async () => {
+    setLoadWalletButtonLoading(true)
+
+    setTimeout(() => {
+      axios({
+        method: 'post',
+        url: 'http://localhost:8083/api/v1/wallet/loadBalance',
+        data: {
+          amount: loadingAmount,
+        },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+      })
+        .then((res) => {
+          setWalletBalance(res.data.data)
+          setLoadWalletButtonLoading(false)
+          setShowLoadWalletButton(false)
+        })
+        .catch((err) => {
+          setLoadWalletButtonLoading(false)
+          alert('Something went wrong')
+        })
+    }, 400)
+  }
 
   return (
     <>
@@ -62,6 +122,7 @@ const LoanSuggestionItem = () => {
                   )} - ${location.state.maxLendingAmount.toLocaleString('en-US')}`}
                 />
               </div>
+              <p style={{ color: 'red', marginTop: '20px' }}>{lendingErrorMsg}</p>
               <CButton style={{ backgroundColor: 'navy' }} className="mt-3" active tabIndex={-1}>
                 Lend
               </CButton>
@@ -71,9 +132,21 @@ const LoanSuggestionItem = () => {
               <p>
                 Available Balance: &nbsp;&nbsp;<strong>Rs. {walletBalance}</strong>
               </p>
-              {loadingAmount > 0 && (
-                <CButton style={{ backgroundColor: 'navy' }} className="mt-3" active tabIndex={-1}>
-                  Load Rs. {loadingAmount.toLocaleString('en-US')} into wallet
+              {loadingAmount > 0 && showLoadWalletButton && (
+                <CButton
+                  style={{ backgroundColor: 'navy' }}
+                  className="mt-3"
+                  active
+                  tabIndex={-1}
+                  onClick={loadWallet}
+                >
+                  {loadWalletButtonLoading ? (
+                    <div className="spinner-border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  ) : (
+                    <>Load Rs. {loadingAmount.toLocaleString('en-US')} into wallet</>
+                  )}
                 </CButton>
               )}
             </div>
