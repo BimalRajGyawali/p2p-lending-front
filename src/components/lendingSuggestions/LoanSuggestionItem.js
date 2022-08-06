@@ -25,14 +25,17 @@ const LoanSuggestionItem = () => {
       setLendingErrorMsg(
         `Lending Amount should be in range of ${location.state.minLendingAmount} and ${location.state.maxLendingAmount}`,
       )
+      setLoadingAmount(0)
       return
     }
     if (parseInt(e.target.value) % 5000 !== 0) {
       setLendingErrorMsg('Lending Amount should be multiple of Rs. 5,000')
+      setLoadingAmount(0)
       return
     }
-    setLendingErrorMsg('')
     setLoadingAmount(parseInt(e.target.value) - walletBalance)
+
+    setLendingErrorMsg('')
     loadingAmount > 0 && setShowLoadWalletButton(true)
   }
 
