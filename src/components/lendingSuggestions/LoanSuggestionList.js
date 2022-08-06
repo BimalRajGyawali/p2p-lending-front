@@ -31,8 +31,8 @@ const LoanSuggestionList = () => {
     <>
       {loanSuggestions.length > 0 ? (
         <CRow>
-          {loanSuggestions.map((loanSuggestion) => (
-            <CCol style={{ marginBottom: '40px' }} sm={4} key={loanSuggestion.id}>
+          {loanSuggestions.map((loanSuggestion, index) => (
+            <CCol style={{ marginBottom: '40px' }} sm={4} key={index + 1}>
               <CCard
                 style={{ cursor: 'pointer' }}
                 onClick={() => viewSingleSuggestion(loanSuggestion)}

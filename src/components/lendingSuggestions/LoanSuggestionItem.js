@@ -15,9 +15,7 @@ const LoanSuggestionItem = () => {
     setLendingAmount(e.target.value)
     setLoadingAmount(parseInt(e.target.value) - walletBalance)
   }
-  useEffect(() => {
-    console.log(location.state)
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <>
@@ -31,13 +29,14 @@ const LoanSuggestionItem = () => {
             marginTop: '-10px',
           }}
           src={BackImg}
+          alt="back"
         />
       </Link>
       <CCard>
         <CCardBody>
           <CCardText>
             <div style={{ width: '50%', float: 'left' }}>
-              <h2 style={{ fontWeight: 'bold', marginBottom: '20px' }}>Loan Request Details</h2>
+              <p style={{ fontWeight: 'bold', marginBottom: '20px' }}>Loan Request Details</p>
               <p>{location.state.loanType} Loan</p>
               <p style={{ fontWeight: 'bold', fontSize: '2em' }}>15%</p>
               <p>Requested: Rs. {location.state.loanAmount.toLocaleString('en-US')}</p>
