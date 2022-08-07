@@ -112,7 +112,7 @@ const KycForm = () => {
           province: address(res.data.data.permanentAddress, 1),
           municipality: address(res.data.data.permanentAddress, 2),
           ward: address(res.data.data.permanentAddress, 3),
-          tole: address(res.data.data.permanentAddress, 3),
+          tole: address(res.data.data.permanentAddress, 4),
         })
         setContact({
           ...contact,
@@ -145,8 +145,13 @@ const KycForm = () => {
     formData.append('gender', kyc.gender)
     formData.append('citizenShipNumber', kyc.citizenShipNumber)
     formData.append('maritalStatus', kyc.maritalStatus)
-    formData.append('citizenShipPhotoFront', citizenShipFront)
-    formData.append('citizenShipPhotoBack', citizenShipBack)
+    if (citizenShipFront) {
+      formData.append('citizenShipPhotoFront', citizenShipFront)
+    }
+    if (citizenShipBack) {
+      formData.append('citizenShipPhotoBack', citizenShipBack)
+    }
+
     formData.append('email', localStorage.getItem('email'))
 
     axios({
