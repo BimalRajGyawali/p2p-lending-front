@@ -33,8 +33,8 @@ const WalletTransTable = ({ transactions }) => {
               <CTableDataCell>
                 {trans.amount && trans.amount.toLocaleString('en-Us')}
               </CTableDataCell>
-              <CTableDataCell>{trans.type} months</CTableDataCell>
-              <CTableDataCell>{trans.remarks} months</CTableDataCell>
+              <CTableDataCell>{trans.type}</CTableDataCell>
+              <CTableDataCell>{trans.remarks}</CTableDataCell>
               <CTableDataCell>{trans.date + ' ' + trans.time}</CTableDataCell>
             </CTableRow>
           ))}
