@@ -416,30 +416,34 @@ const KycForm = () => {
         />
       </CCol>
 
-      <div style={{ marginTop: '100px', display: 'flex' }}>
-        <a
-          href={`http://localhost:8081/registration/documents/${kyc.citizenShipFrontPath}`}
-          style={{ cursor: 'zoom-in', marginRight: '120px' }}
-        >
-          <img
-            src={`http://localhost:8081/registration/documents/${kyc.citizenShipFrontPath}`}
-            style={{ height: '300px', width: '300px' }}
-            alt={'Citizenship front'}
-          />
-          <figcaption>Citizenship Front</figcaption>
-        </a>
+      <div style={{ marginTop: '50px', display: 'flex' }}>
+        {kyc.citizenShipFrontPath && (
+          <a
+            href={`http://localhost:8081/registration/documents/${kyc.citizenShipFrontPath}`}
+            style={{ cursor: 'zoom-in', marginRight: '120px' }}
+          >
+            <img
+              src={`http://localhost:8081/registration/documents/${kyc.citizenShipFrontPath}`}
+              style={{ height: '300px', width: '300px' }}
+              alt={'Citizenship front'}
+            />
+            <figcaption>Citizenship Front</figcaption>
+          </a>
+        )}
 
-        <a
-          href={`http://localhost:8081/registration/documents/${kyc.citizenShipBackPath}`}
-          style={{ cursor: 'zoom-in' }}
-        >
-          <img
-            src={`http://localhost:8081/registration/documents/${kyc.citizenShipBackPath}`}
-            style={{ height: '300px', width: '300px' }}
-            alt={'Citizenship Back'}
-          />
-          <figcaption>Citizenship Back</figcaption>
-        </a>
+        {kyc.citizenShipFrontPath && (
+          <a
+            href={`http://localhost:8081/registration/documents/${kyc.citizenShipBackPath}`}
+            style={{ cursor: 'zoom-in' }}
+          >
+            <img
+              src={`http://localhost:8081/registration/documents/${kyc.citizenShipBackPath}`}
+              style={{ height: '300px', width: '300px' }}
+              alt={'Citizenship Back'}
+            />
+            <figcaption>Citizenship Back</figcaption>
+          </a>
+        )}
       </div>
 
       <div className="mt-4" />
