@@ -77,7 +77,7 @@ const KycForm = () => {
 
   useEffect(() => {
     axios
-      .post('http://localhost:8081/api/v1/getKYC', {
+      .post('http://localhost:8081/registration/getKYC', {
         email: localStorage.getItem('email'),
       })
       .then((res) => {
@@ -92,20 +92,22 @@ const KycForm = () => {
           citizenShipNumber: res.data.data.citizenShipNumber,
           dob: res.data.data.dob,
           maritalStatus: res.data.data.maritalStatus,
-          verificationStatus: res.data.data.verificationStatus,
+          verificationStatus: res.data.data.verified,
         })
         setTempAddr({
           ...tempAddr,
           district: address(res.data.data.temporaryAddress, 0),
           province: address(res.data.data.temporaryAddress, 1),
           municipality: address(res.data.data.temporaryAddress, 2),
-          tole: address(res.data.data.temporaryAddress, 3),
+          ward: address(res.data.data.temporaryAddress, 3),
+          tole: address(res.data.data.temporaryAddress, 4),
         })
         setPermanentAddr({
           ...permanentAddr,
           district: address(res.data.data.permanentAddress, 0),
           province: address(res.data.data.permanentAddress, 1),
           municipality: address(res.data.data.permanentAddress, 2),
+          ward: address(res.data.data.permanentAddress, 3),
           tole: address(res.data.data.permanentAddress, 3),
         })
         setContact({
@@ -123,10 +125,6 @@ const KycForm = () => {
 
   const submitKycForm = () => {
     setSubmitting(true)
-    console.log(kyc)
-    console.log(tempAddr)
-    console.log(permanentAddr)
-    console.log(contact)
 
     let formData = new FormData()
     formData.append('permanentAddress', JSON.stringify(permanentAddr))
@@ -141,11 +139,11 @@ const KycForm = () => {
     formData.append('maritalStatus', kyc.maritalStatus)
     formData.append('citizenShipPhotoFront', citizenShipFront)
     formData.append('citizenShipPhotoBack', citizenShipBack)
-    formData.append('email', 'bimal@gmail.com')
+    formData.append('email', localStorage.getItem('email'))
 
     axios({
       method: 'post',
-      url: 'http://localhost:8081/registerKYC',
+      url: 'http://localhost:8081/registration/registerKYC',
       data: formData,
       headers: { 'Content-Type': 'multipart/form-data' },
     })
@@ -163,7 +161,15 @@ const KycForm = () => {
 
   return (
     <CForm className="row g-3">
-      {kyc.verificationStatus && <p>Kyc Verification Status: {kyc.verificationStatus}</p>}
+      {kyc.verificationStatus !== '' && (
+        <p style={{ marginBottom: '30px' }}>
+          {kyc.verificationStatus ? (
+            <span style={{ color: 'green', fontSize: '1.1em' }}>Kyc Verified</span>
+          ) : (
+            <span style={{ color: 'red', fontSize: '1.1em' }}>Kyc Not Verified</span>
+          )}
+        </p>
+      )}
       <h2 style={{ fontWeight: 'bold' }}>Personal Information</h2>
       <CCol md={4}>
         <CFormInput
