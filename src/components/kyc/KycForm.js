@@ -38,6 +38,8 @@ const KycForm = () => {
     dob: '',
     maritalStatus: '',
     verificationStatus: '',
+    citizenShipFrontPath: '',
+    citizenShipBackPath: '',
   })
 
   const [citizenShipFront, setCitizenShipFront] = useState(null)
@@ -75,7 +77,7 @@ const KycForm = () => {
     setCitizenShipBack(e.target.files[0])
   }
 
-  useEffect(() => {
+  const populateForm = () => {
     axios
       .post('http://localhost:8081/registration/getKYC', {
         email: localStorage.getItem('email'),
@@ -93,6 +95,8 @@ const KycForm = () => {
           dob: res.data.data.dob,
           maritalStatus: res.data.data.maritalStatus,
           verificationStatus: res.data.data.verified,
+          citizenShipFrontPath: res.data.data.citizenShipPhotoFront,
+          citizenShipBackPath: res.data.data.citizenShipPhotoBack,
         })
         setTempAddr({
           ...tempAddr,
@@ -121,6 +125,10 @@ const KycForm = () => {
       .catch((err) => {
         console.log(err)
       })
+  }
+
+  useEffect(() => {
+    populateForm()
   }, [])
 
   const submitKycForm = () => {
@@ -148,8 +156,8 @@ const KycForm = () => {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
       .then(function (response) {
-        console.log(response)
         setSubmitting(false)
+        populateForm()
         alert('Kyc submitted successfully')
       })
       .catch(function (response) {
@@ -402,6 +410,32 @@ const KycForm = () => {
           onChange={handleCitizenShipBack}
         />
       </CCol>
+
+      <div style={{ marginTop: '100px', display: 'flex' }}>
+        <a
+          href={`http://localhost:8081/registration/documents/${kyc.citizenShipFrontPath}`}
+          style={{ cursor: 'zoom-in', marginRight: '120px' }}
+        >
+          <img
+            src={`http://localhost:8081/registration/documents/${kyc.citizenShipFrontPath}`}
+            style={{ height: '300px', width: '300px' }}
+            alt={'Citizenship front'}
+          />
+          <figcaption>Citizenship Front</figcaption>
+        </a>
+
+        <a
+          href={`http://localhost:8081/registration/documents/${kyc.citizenShipBackPath}`}
+          style={{ cursor: 'zoom-in' }}
+        >
+          <img
+            src={`http://localhost:8081/registration/documents/${kyc.citizenShipBackPath}`}
+            style={{ height: '300px', width: '300px' }}
+            alt={'Citizenship Back'}
+          />
+          <figcaption>Citizenship Back</figcaption>
+        </a>
+      </div>
 
       <div className="mt-4" />
 
