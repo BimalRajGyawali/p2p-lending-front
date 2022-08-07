@@ -10,12 +10,15 @@ import {
   CFormLabel,
 } from '@coreui/react'
 import axios from 'axios'
+import alert from '@coreui/coreui/js/src/alert'
+import { data } from 'autoprefixer'
 
 const LoanRequestForm = () => {
   const [loanTypes, setLoanTypes] = useState([])
   const [loanAmount, setLoanAmount] = useState(0.0)
   const [loanDuration, setLoanDuration] = useState(0)
   const [loanType, setLoanType] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     axios({
@@ -43,6 +46,8 @@ const LoanRequestForm = () => {
 
   function handleForm(e) {
     e.preventDefault()
+    setLoading(true)
+
     axios({
       method: 'post',
       url: 'http://localhost:8082/api/v1/createLoan',
@@ -55,11 +60,13 @@ const LoanRequestForm = () => {
       },
     })
       .then((res) => {
-        console.log(res)
         alert('Loan Requested successfully')
+        setLoading(false)
       })
       .catch((err) => {
-        console.log(err)
+        setLoading(false)
+        console.log(err.response.data.error)
+        const msg = err.response.data.error
       })
   }
 
@@ -96,7 +103,13 @@ const LoanRequestForm = () => {
             style={{ background: 'navy' }}
             onClick={handleForm}
           >
-            Request Loan
+            {loading ? (
+              <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+              </div>
+            ) : (
+              <>Request Loan</>
+            )}
           </CButton>
         </div>
       </CForm>

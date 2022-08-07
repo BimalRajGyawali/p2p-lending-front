@@ -36,6 +36,7 @@ import KycForm from './components/kyc/KycForm'
 import LoanRequestPage from './components/loanRequest/LoanRequestPage'
 import LoanSuggestionList from './components/lendingSuggestions/LoanSuggestionList'
 import LoanSuggestionItem from './components/lendingSuggestions/LoanSuggestionItem'
+import Wallet from './components/wallet/Wallet'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -88,6 +89,7 @@ const routes = [
   { path: '/loanRequest', name: 'LoanRequest', element: LoanRequestPage },
   { path: '/loanSuggestions', name: 'Loan Suggestions', element: LoanSuggestionList },
   { path: '/singleSuggestion', name: 'Loan Suggestion', element: LoanSuggestionItem },
+  { path: '/lenderWallet', name: 'Wallet', element: Wallet },
 ]
 
 export default routes
