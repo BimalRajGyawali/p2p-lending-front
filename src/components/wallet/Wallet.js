@@ -49,10 +49,21 @@ const Wallet = () => {
               <strong>Rs. {walletBalance.toLocaleString('en-Us')} </strong>
             </p>
 
-            {transactions.length > 0 && (
+            {transactions.length > 0 ? (
               <div>
                 <WalletTransTable transactions={transactions} />
               </div>
+            ) : (
+              <p
+                style={{
+                  marginBottom: '20px',
+                  fontSize: '0.9em',
+                  fontStyle: 'italic',
+                  marginTop: '50px',
+                }}
+              >
+                Wallet Transactions will appear here
+              </p>
             )}
           </CCardText>
         </CCardBody>
