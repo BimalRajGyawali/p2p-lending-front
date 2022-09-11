@@ -5,7 +5,7 @@ import { CAlert } from '@coreui/react'
 const LoanRequestInvalid = ({ message }) => {
   return (
     <>
-      <CAlert color="info">Sorry You Cannot Request Loan. {message}</CAlert>
+      <CAlert color="info">{message}</CAlert>
     </>
   )
 }

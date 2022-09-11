@@ -90,6 +90,7 @@ const routes = [
   { path: '/loanSuggestions', name: 'Loan Suggestions', element: LoanSuggestionList },
   { path: '/singleSuggestion', name: 'Loan Suggestion', element: LoanSuggestionItem },
   { path: '/lenderWallet', name: 'Wallet', element: Wallet },
+  { path: '/borrowerWallet', name: 'Wallet', element: Wallet },
 ]
 
 export default routes

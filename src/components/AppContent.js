@@ -23,7 +23,13 @@ const AppContent = () => {
               )
             )
           })}
-          <Route path="/" element={<Navigate to="dashboard" replace />} />
+          {localStorage.getItem('role') === 'BORROWER' && (
+            <Route path="/" element={<Navigate to="kyc" replace />} />
+          )}
+
+          {localStorage.getItem('role') === 'LENDER' && (
+            <Route path="/" element={<Navigate to="loanSuggestions" replace />} />
+          )}
         </Routes>
       </Suspense>
     </CContainer>
