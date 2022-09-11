@@ -5,7 +5,7 @@ import LoanRequestTable from './LoanRequestTable'
 import axios from 'axios'
 
 const LoanRequestPage = () => {
-  const [showForm, setShowForm] = useState(true)
+  const [showForm, setShowForm] = useState(false)
   const [reason, setReason] = useState('')
   const [previousLoans, setPreviousLoans] = useState([])
 
