@@ -379,7 +379,7 @@ const KycForm = () => {
         <CFormInput
           type="email"
           id="email"
-          label="Email"
+          label="Secondary Email"
           value={contact.otherEmail}
           onChange={(e) => handleContactChange('otherEmail', e)}
         />
