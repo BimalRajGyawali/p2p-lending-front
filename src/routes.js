@@ -37,6 +37,7 @@ import LoanRequestPage from './components/loanRequest/LoanRequestPage'
 import LoanSuggestionList from './components/lendingSuggestions/LoanSuggestionList'
 import LoanSuggestionItem from './components/lendingSuggestions/LoanSuggestionItem'
 import Wallet from './components/wallet/Wallet'
+import MyLendings from './components/mylendings/MyLendings'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -91,6 +92,7 @@ const routes = [
   { path: '/singleSuggestion', name: 'Loan Suggestion', element: LoanSuggestionItem },
   { path: '/lenderWallet', name: 'Wallet', element: Wallet },
   { path: '/borrowerWallet', name: 'Wallet', element: Wallet },
+  { path: '/lendings', name: 'My Lendings', element: MyLendings },
 ]
 
 export default routes
