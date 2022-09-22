@@ -54,7 +54,7 @@ const LoanSuggestionItem = () => {
   }
   useEffect(() => {
     fetchWalletBalance().then((res) => {
-      setWalletBalance(parseFloat(res.data.data))
+      setWalletBalance(parseFloat(res.data.data.availableBalance))
     })
   }, [])
 
