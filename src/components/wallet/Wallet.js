@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { CCard, CCardBody, CCardText } from '@coreui/react'
+import React, {useEffect, useState} from 'react'
+import {CCard, CCardBody, CCardText} from '@coreui/react'
 import axios from 'axios'
-import LoanRequestTable from '../loanRequest/LoanRequestTable'
 import WalletTransTable from './WalletTransTable'
 
 const Wallet = () => {
