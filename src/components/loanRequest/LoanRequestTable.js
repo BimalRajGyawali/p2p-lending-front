@@ -13,7 +13,7 @@ const LoanRequestTable = ({ loans }) => {
     <>
       <p style={{ marginBottom: '20px', fontSize: '20px', fontWeight: '500' }}>
         {' '}
-        Your Previous Loan Requests
+        Your Loan Requests
       </p>
 
       <CTable striped>
