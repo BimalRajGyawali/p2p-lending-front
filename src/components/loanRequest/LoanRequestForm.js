@@ -1,17 +1,7 @@
-import React, { Component, useState, useEffect } from 'react'
-import {
-  CButton,
-  CCol,
-  CRow,
-  CForm,
-  CFormInput,
-  CFormSelect,
-  CSpinner,
-  CFormLabel,
-} from '@coreui/react'
+import React, {useEffect, useState} from 'react'
+import {CButton, CForm, CFormInput, CFormLabel, CFormSelect,} from '@coreui/react'
 import axios from 'axios'
 import alert from '@coreui/coreui/js/src/alert'
-import { data } from 'autoprefixer'
 
 const LoanRequestForm = () => {
   const [loanTypes, setLoanTypes] = useState([])
