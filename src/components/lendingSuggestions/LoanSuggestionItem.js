@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { CButton, CCard, CCardBody, CCardText, CCardTitle, CFormInput } from '@coreui/react'
 import BackImg from 'src/assets/images/back-button.png'
 import axios from 'axios'
@@ -15,6 +15,7 @@ const LoanSuggestionItem = () => {
   const [lendingErrorMsg, setLendingErrorMsg] = useState('')
 
   const location = useLocation()
+  const navigate = useNavigate()
 
   const handleLendingAmountChange = (e) => {
     setLendingAmount(e.target.value)
@@ -93,7 +94,7 @@ const LoanSuggestionItem = () => {
 
     axios({
       method: 'post',
-      url: 'http://localhost:8083/api/v1/lnd',
+      url: 'http://localhost:8083/api/v1/lend',
       data: {
         amount: lendingAmount,
         loanId: location.state.loanId,
@@ -103,13 +104,12 @@ const LoanSuggestionItem = () => {
       },
     })
       .then((res) => {
-        setWalletBalance(parseFloat(res.data.data))
-        setLoadWalletButtonLoading(false)
-        setShowLoadWalletButton(false)
+        alert('Lending successful')
+        navigate('/lendings')
       })
       .catch((err) => {
-        setLoadWalletButtonLoading(false)
         alert('Something went wrong')
+        setLendButtonLoading(false)
       })
   }
 
