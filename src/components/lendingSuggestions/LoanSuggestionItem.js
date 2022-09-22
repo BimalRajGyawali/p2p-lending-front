@@ -11,6 +11,7 @@ const LoanSuggestionItem = () => {
   const [lendingAmount, setLendingAmount] = useState('')
   const [showLoadWalletButton, setShowLoadWalletButton] = useState(true)
   const [loadWalletButtonLoading, setLoadWalletButtonLoading] = useState(false)
+  const [lendButtonLoading, setLendButtonLoading] = useState(false)
   const [lendingErrorMsg, setLendingErrorMsg] = useState('')
 
   const location = useLocation()
@@ -26,11 +27,13 @@ const LoanSuggestionItem = () => {
         `Lending Amount should be in range of ${location.state.minLendingAmount} and ${location.state.maxLendingAmount}`,
       )
       setLoadingAmount(0)
+      setShowLoadWalletButton(true)
       return
     }
     if (parseInt(e.target.value) % 5000 !== 0) {
       setLendingErrorMsg('Lending Amount should be multiple of Rs. 5,000')
       setLoadingAmount(0)
+      setShowLoadWalletButton(true)
       return
     }
     setLoadingAmount(parseInt(e.target.value) - walletBalance)
@@ -39,7 +42,8 @@ const LoanSuggestionItem = () => {
 
     if (parseInt(e.target.value) - walletBalance > 0) {
       setShowLoadWalletButton(true)
-      setShowLoadWalletButton(true)
+    } else {
+      setShowLoadWalletButton(false)
     }
   }
 
@@ -82,6 +86,31 @@ const LoanSuggestionItem = () => {
           alert('Something went wrong')
         })
     }, 400)
+  }
+
+  const lend = () => {
+    setLendButtonLoading(true)
+
+    axios({
+      method: 'post',
+      url: 'http://localhost:8083/api/v1/lnd',
+      data: {
+        amount: lendingAmount,
+        loanId: location.state.loanId,
+      },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then((res) => {
+        setWalletBalance(parseFloat(res.data.data))
+        setLoadWalletButtonLoading(false)
+        setShowLoadWalletButton(false)
+      })
+      .catch((err) => {
+        setLoadWalletButtonLoading(false)
+        alert('Something went wrong')
+      })
   }
 
   return (
@@ -130,9 +159,23 @@ const LoanSuggestionItem = () => {
                 />
               </div>
               <p style={{ color: 'red', marginTop: '20px' }}>{lendingErrorMsg}</p>
-              <CButton style={{ backgroundColor: 'navy' }} className="mt-3" active tabIndex={-1}>
-                Lend
-              </CButton>
+              {!showLoadWalletButton && (
+                <CButton
+                  style={{ backgroundColor: 'navy' }}
+                  className="mt-3"
+                  active
+                  tabIndex={-1}
+                  onClick={lend}
+                >
+                  {lendButtonLoading ? (
+                    <div className="spinner-border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  ) : (
+                    'Lend'
+                  )}
+                </CButton>
+              )}
             </div>
             <div style={{ width: '50%', float: 'left' }}>
               <h2 style={{ fontWeight: 'bold', marginBottom: '20px' }}>Wallet Summary</h2>
