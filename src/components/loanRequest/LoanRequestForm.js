@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import {CButton, CForm, CFormInput, CFormLabel, CFormSelect,} from '@coreui/react'
+import React, { useEffect, useState } from 'react'
+import { CButton, CForm, CFormInput, CFormLabel, CFormSelect } from '@coreui/react'
 import axios from 'axios'
 import alert from '@coreui/coreui/js/src/alert'
 

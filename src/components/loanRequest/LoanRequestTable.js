@@ -34,7 +34,7 @@ const LoanRequestTable = ({ loans }) => {
               <CTableDataCell>{loan.loanType}</CTableDataCell>
               <CTableDataCell>{loan.duration} months</CTableDataCell>
               <CTableDataCell>{loan.amount.toLocaleString('en-Us')}</CTableDataCell>
-              <CTableDataCell>{loan.suggestionStatus}</CTableDataCell>
+              <CTableDataCell>{loan.loanStatus}</CTableDataCell>
             </CTableRow>
           ))}
         </CTableBody>
