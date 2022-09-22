@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { CButton, CForm, CFormInput, CFormLabel, CFormSelect } from '@coreui/react'
 import axios from 'axios'
-import alert from '@coreui/coreui/js/src/alert'
+import { useNavigate } from 'react-router-dom'
 
 const LoanRequestForm = () => {
   const [loanTypes, setLoanTypes] = useState([])
@@ -9,6 +9,8 @@ const LoanRequestForm = () => {
   const [loanDuration, setLoanDuration] = useState(0)
   const [loanType, setLoanType] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios({
@@ -52,11 +54,13 @@ const LoanRequestForm = () => {
       .then((res) => {
         alert('Loan Requested successfully')
         setLoading(false)
+        window.location.reload()
       })
       .catch((err) => {
         setLoading(false)
         console.log(err.response.data.error)
-        const msg = err.response.data.error
+        err.response.data.error && alert(err.response.data.error)
+        err.response.data.errors.duration && alert(err.response.data.errors.duration)
       })
   }
 
