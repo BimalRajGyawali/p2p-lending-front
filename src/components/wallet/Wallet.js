@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import {CCard, CCardBody, CCardText} from '@coreui/react'
+import React, { useEffect, useState } from 'react'
+import { CCard, CCardBody, CCardText } from '@coreui/react'
 import axios from 'axios'
 import WalletTransTable from './WalletTransTable'
 
