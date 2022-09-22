@@ -13,7 +13,7 @@ const LoanRequestTable = ({ loans }) => {
     <>
       <p style={{ marginBottom: '20px', fontSize: '20px', fontWeight: '500' }}>
         {' '}
-        Your Previous Loan Requests
+        Your Loan Requests
       </p>
 
       <CTable striped>
@@ -24,6 +24,7 @@ const LoanRequestTable = ({ loans }) => {
             <CTableHeaderCell scope="col">Loan Duration</CTableHeaderCell>
             <CTableHeaderCell scope="col">Loan Amount</CTableHeaderCell>
             <CTableHeaderCell scope="col">Loan Status</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Requested Date</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -34,7 +35,8 @@ const LoanRequestTable = ({ loans }) => {
               <CTableDataCell>{loan.loanType}</CTableDataCell>
               <CTableDataCell>{loan.duration} months</CTableDataCell>
               <CTableDataCell>{loan.amount.toLocaleString('en-Us')}</CTableDataCell>
-              <CTableDataCell>{loan.suggestionStatus}</CTableDataCell>
+              <CTableDataCell>{loan.loanStatus}</CTableDataCell>
+              <CTableDataCell>{loan.requestedDate}</CTableDataCell>
             </CTableRow>
           ))}
         </CTableBody>

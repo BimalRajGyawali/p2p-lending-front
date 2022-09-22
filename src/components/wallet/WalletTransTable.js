@@ -35,7 +35,7 @@ const WalletTransTable = ({ transactions }) => {
               </CTableDataCell>
               <CTableDataCell>{trans.type}</CTableDataCell>
               <CTableDataCell>{trans.remarks}</CTableDataCell>
-              <CTableDataCell>{trans.date + ' ' + trans.time}</CTableDataCell>
+              <CTableDataCell>{new Date(trans.date).toLocaleString()}</CTableDataCell>
             </CTableRow>
           ))}
         </CTableBody>

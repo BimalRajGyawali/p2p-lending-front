@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { CCard, CCardBody, CCardText } from '@coreui/react'
 import axios from 'axios'
-import LoanRequestTable from '../loanRequest/LoanRequestTable'
 import WalletTransTable from './WalletTransTable'
 
 const Wallet = () => {
-  const [walletBalance, setWalletBalance] = useState(0)
+  const [walletTotalBalance, setWalletTotalBalance] = useState(0)
+  const [walletAvailableBalance, setWalletAvailableBalance] = useState(0)
   const [transactions, setTransactions] = useState([])
 
   const fetchWalletBalance = () => {
@@ -30,7 +30,8 @@ const Wallet = () => {
 
   useEffect(() => {
     fetchWalletBalance().then((res) => {
-      setWalletBalance(parseFloat(res.data.data))
+      setWalletTotalBalance(parseFloat(res.data.data.totalBalance))
+      setWalletAvailableBalance(parseFloat(res.data.data.availableBalance))
     })
 
     fetchAllTransactions().then((res) => {
@@ -44,9 +45,13 @@ const Wallet = () => {
         <CCardBody>
           <CCardText>
             <h2 style={{ fontWeight: 'bold', marginBottom: '20px' }}>Wallet Summary</h2>
+            <p style={{ marginBottom: '15px' }}>
+              Total Balance: &nbsp;&nbsp;
+              <strong>Rs. {walletTotalBalance.toLocaleString('en-Us')} </strong>
+            </p>
             <p>
               Available Balance: &nbsp;&nbsp;
-              <strong>Rs. {walletBalance.toLocaleString('en-Us')} </strong>
+              <strong>Rs. {walletAvailableBalance.toLocaleString('en-Us')} </strong>
             </p>
 
             {transactions.length > 0 ? (
