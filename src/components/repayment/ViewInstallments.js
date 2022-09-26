@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import {
   CAccordion,
@@ -8,12 +8,6 @@ import {
   CCard,
   CCardBody,
   CCardText,
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
 } from '@coreui/react'
 import BackImg from '../../assets/images/back-button.png'
 import InstallmentTable from './InstallmentTable'
