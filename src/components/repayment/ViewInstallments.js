@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import {
+  CAccordion,
+  CAccordionBody,
+  CAccordionHeader,
+  CAccordionItem,
   CCard,
   CCardBody,
   CCardText,
@@ -63,41 +67,11 @@ const ViewInstallments = () => {
         />
       </Link>
 
-      <CCard>
-        <CCardBody>
-          <CCardText>
-            <p style={{ fontWeight: '500', marginBottom: '25px' }}>Loan Details</p>
-            <CTable striped>
-              <CTableHead>
-                <CTableRow>
-                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Loan Type</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Loan Duration</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Loan Amount</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Loan Status</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Requested Date</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                <CTableRow key={location.state.id}>
-                  <CTableDataCell></CTableDataCell>
-                  <CTableDataCell>{location.state.loanType}</CTableDataCell>
-                  <CTableDataCell>{location.state.duration} months</CTableDataCell>
-                  <CTableDataCell>{location.state.amount.toLocaleString('en-Us')}</CTableDataCell>
-                  <CTableDataCell>{location.state.loanStatus}</CTableDataCell>
-                  <CTableDataCell>{location.state.requestedDate}</CTableDataCell>
-                </CTableRow>
-              </CTableBody>
-            </CTable>
-          </CCardText>
-        </CCardBody>
-      </CCard>
-
       {scheduledInstallments.length > 0 && (
         <CCard style={{ marginTop: '30px' }}>
           <CCardBody>
             <CCardText>
-              <div style={{ marginTop: '30px' }}>
+              <div>
                 <p style={{ fontWeight: '500', marginBottom: '25px' }}>Scheduled Installment</p>
                 <InstallmentTable
                   installments={scheduledInstallments}
@@ -109,34 +83,47 @@ const ViewInstallments = () => {
         </CCard>
       )}
 
-      {missedInstallments.length > 0 && (
-        <CCard style={{ marginTop: '30px' }}>
-          <CCardBody>
-            <CCardText>
-              <div style={{ marginTop: '30px' }}>
-                <p style={{ fontWeight: '500', marginBottom: '25px' }}>Missed Installment</p>
-                <InstallmentTable
-                  installments={missedInstallments}
-                  type={installmentTypes.UNPAID}
-                />
-              </div>
-            </CCardText>
-          </CCardBody>
-        </CCard>
-      )}
+      <CAccordion style={{ marginTop: '30px' }}>
+        <CAccordionItem>
+          <CAccordionHeader>Missed Installments</CAccordionHeader>
+          <CAccordionBody>
+            {missedInstallments.length > 0 && (
+              <CCard>
+                <CCardBody>
+                  <CCardText>
+                    <div>
+                      <InstallmentTable
+                        installments={missedInstallments}
+                        type={installmentTypes.UNPAID}
+                      />
+                    </div>
+                  </CCardText>
+                </CCardBody>
+              </CCard>
+            )}
+          </CAccordionBody>
+        </CAccordionItem>
 
-      {paidInstallments.length > 0 && (
-        <CCard style={{ marginTop: '30px' }}>
-          <CCardBody>
-            <CCardText>
-              <div style={{ marginTop: '30px' }}>
-                <p style={{ fontWeight: '500', marginBottom: '25px' }}>Paid Installment</p>
-                <InstallmentTable installments={paidInstallments} type={installmentTypes.PAID} />
-              </div>
-            </CCardText>
-          </CCardBody>
-        </CCard>
-      )}
+        <CAccordionItem style={{ marginTop: '20px' }}>
+          <CAccordionHeader>Paid Installments</CAccordionHeader>
+          <CAccordionBody>
+            {paidInstallments.length > 0 && (
+              <CCard>
+                <CCardBody>
+                  <CCardText>
+                    <div>
+                      <InstallmentTable
+                        installments={paidInstallments}
+                        type={installmentTypes.PAID}
+                      />
+                    </div>
+                  </CCardText>
+                </CCardBody>
+              </CCard>
+            )}
+          </CAccordionBody>
+        </CAccordionItem>
+      </CAccordion>
     </>
   )
 }
