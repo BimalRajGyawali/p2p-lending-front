@@ -15,7 +15,7 @@ import InstallmentTable from './InstallmentTable'
 const ViewInstallments = () => {
   const [scheduledInstallments, setScheduledInstallments] = useState([
     {
-      id: '123',
+      id: '456',
       amount: 4000,
       scheduledDate: '2022-01-02',
       paidDate: '2022-02-01',
