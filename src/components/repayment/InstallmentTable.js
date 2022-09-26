@@ -11,6 +11,10 @@ import React from 'react'
 
 // eslint-disable-next-line react/prop-types
 const InstallmentTable = ({ installments, type }) => {
+  const payInstallment = (installment) => {
+    //make request for pay
+  }
+
   return (
     <>
       <CTable striped>
@@ -36,7 +40,9 @@ const InstallmentTable = ({ installments, type }) => {
               )}
               {type === 'UNPAID' && (
                 <CTableDataCell>
-                  <CButton style={{ color: 'black' }}>Pay</CButton>
+                  <CButton style={{ color: 'black' }} onClick={() => payInstallment(installment)}>
+                    Pay
+                  </CButton>
                 </CTableDataCell>
               )}
             </CTableRow>

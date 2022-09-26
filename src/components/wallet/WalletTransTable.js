@@ -9,6 +9,18 @@ import {
 } from '@coreui/react'
 // eslint-disable-next-line react/prop-types
 const WalletTransTable = ({ transactions }) => {
+  const getStyle = (type) => {
+    if (type === 'DEBIT') {
+      return {
+        color: 'red',
+      }
+    } else {
+      return {
+        color: 'green',
+      }
+    }
+  }
+
   return (
     <>
       <p style={{ marginBottom: '20px', marginTop: '50px', fontWeight: 'bold' }}>
@@ -29,13 +41,15 @@ const WalletTransTable = ({ transactions }) => {
           {/* eslint-disable-next-line react/prop-types */}
           {transactions.map((trans, index) => (
             <CTableRow key={trans.id}>
-              <CTableDataCell>{index + 1}</CTableDataCell>
-              <CTableDataCell>
+              <CTableDataCell style={getStyle(trans.type)}>{index + 1}</CTableDataCell>
+              <CTableDataCell style={getStyle(trans.type)}>
                 {trans.amount && trans.amount.toLocaleString('en-Us')}
               </CTableDataCell>
-              <CTableDataCell>{trans.type}</CTableDataCell>
-              <CTableDataCell>{trans.remarks}</CTableDataCell>
-              <CTableDataCell>{new Date(trans.date).toLocaleString()}</CTableDataCell>
+              <CTableDataCell style={getStyle(trans.type)}>{trans.type}</CTableDataCell>
+              <CTableDataCell style={getStyle(trans.type)}>{trans.remarks}</CTableDataCell>
+              <CTableDataCell style={getStyle(trans.type)}>
+                {new Date(trans.date).toLocaleString()}
+              </CTableDataCell>
             </CTableRow>
           ))}
         </CTableBody>
