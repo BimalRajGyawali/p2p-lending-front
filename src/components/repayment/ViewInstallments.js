@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import {
   CAccordion,
@@ -11,39 +11,37 @@ import {
 } from '@coreui/react'
 import BackImg from '../../assets/images/back-button.png'
 import InstallmentTable from './InstallmentTable'
+import axios from 'axios'
 
 const ViewInstallments = () => {
-  const [scheduledInstallments, setScheduledInstallments] = useState([
-    {
-      id: '456',
-      amount: 4000,
-      scheduledDate: '2022-01-02',
-      paidDate: '2022-02-01',
-    },
-  ])
-  const [missedInstallments, setMissedInstallments] = useState([
-    {
-      id: '123',
-      amount: 4000,
-      scheduledDate: '2022-01-02',
-    },
-  ])
-  const [paidInstallments, setPaidInstallments] = useState([
-    {
-      id: '123',
-      amount: 4000,
-      scheduledDate: '2022-01-02',
-      paidDate: '2022-02-01',
-    },
-  ])
+  const [upcomingInstallments, setUpcomingInstallments] = useState([])
+  const [missedInstallments, setMissedInstallments] = useState([])
+  const [paidInstallments, setPaidInstallments] = useState([])
 
   const installmentTypes = { UNPAID: 'UNPAID', PAID: 'PAID' }
   const location = useLocation()
 
-  // useEffect(() => {
-  //   get installments for loan request
-  //   location.state.id
-  // })
+  useEffect(() => {
+    axios({
+      method: 'post',
+      url: 'http://localhost:8085/api/v1/getInstallments',
+      data: {
+        loanId: location.state.id,
+      },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then((res) => {
+        console.log(res)
+        setUpcomingInstallments(res.data.data.upcomingInstallment)
+        setPaidInstallments(res.data.data.paidInstallment)
+        setMissedInstallments(res.data.data.missedInstallment)
+      })
+      .catch((err) => {
+        alert('Something went wrong')
+      })
+  }, [])
 
   return (
     <>
@@ -61,14 +59,14 @@ const ViewInstallments = () => {
         />
       </Link>
 
-      {scheduledInstallments.length > 0 && (
+      {upcomingInstallments.length > 0 && (
         <CCard style={{ marginTop: '30px' }}>
           <CCardBody>
             <CCardText>
               <div>
-                <p style={{ fontWeight: '500', marginBottom: '25px' }}>Scheduled Installment</p>
+                <p style={{ fontWeight: '500', marginBottom: '25px' }}>Upcoming Installment</p>
                 <InstallmentTable
-                  installments={scheduledInstallments}
+                  installments={upcomingInstallments}
                   type={installmentTypes.UNPAID}
                 />
               </div>
@@ -81,7 +79,7 @@ const ViewInstallments = () => {
         <CAccordionItem>
           <CAccordionHeader>Missed Installments</CAccordionHeader>
           <CAccordionBody>
-            {missedInstallments.length > 0 && (
+            {missedInstallments.length > 0 ? (
               <CCard>
                 <CCardBody>
                   <CCardText>
@@ -94,6 +92,8 @@ const ViewInstallments = () => {
                   </CCardText>
                 </CCardBody>
               </CCard>
+            ) : (
+              <p style={{ fontStyle: 'italic' }}>Missed installments will appear here</p>
             )}
           </CAccordionBody>
         </CAccordionItem>
@@ -101,7 +101,7 @@ const ViewInstallments = () => {
         <CAccordionItem style={{ marginTop: '20px' }}>
           <CAccordionHeader>Paid Installments</CAccordionHeader>
           <CAccordionBody>
-            {paidInstallments.length > 0 && (
+            {paidInstallments.length > 0 ? (
               <CCard>
                 <CCardBody>
                   <CCardText>
@@ -114,6 +114,8 @@ const ViewInstallments = () => {
                   </CCardText>
                 </CCardBody>
               </CCard>
+            ) : (
+              <p style={{ fontStyle: 'italic' }}>Paid installments will appear here</p>
             )}
           </CAccordionBody>
         </CAccordionItem>

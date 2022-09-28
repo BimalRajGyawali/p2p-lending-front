@@ -1,25 +1,27 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CCard, CCardBody, CCardText } from '@coreui/react'
 import MyLendingsTable from './MyLendingsTable'
+import axios from 'axios'
 
 const MyLendings = () => {
-  const [myLendings] = useState([
-    {
-      id: 1,
-      amount: 40000,
-      date: '2020-01-01',
-    },
-    {
-      id: 1,
-      amount: 40000,
-      date: '2020-01-01',
-    },
-    {
-      id: 1,
-      amount: 40000,
-      date: '2020-01-01',
-    },
-  ])
+  const [myLendings, setMyLendings] = useState([])
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: 'http://localhost:8082/api/v1/myLendings',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then((res) => {
+        console.log(res)
+        setMyLendings(res.data.data)
+      })
+      .catch((err) => {
+        alert('Something went wrong')
+      })
+  }, [])
 
   return (
     <>
@@ -39,7 +41,7 @@ const MyLendings = () => {
                   marginTop: '50px',
                 }}
               >
-                Wallet Transactions will appear here
+                My Lendings will appear here
               </p>
             )}
           </CCardText>

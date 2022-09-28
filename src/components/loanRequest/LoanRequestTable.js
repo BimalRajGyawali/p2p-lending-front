@@ -46,7 +46,7 @@ const LoanRequestTable = ({ loans }) => {
               <CTableDataCell>{loan.amount.toLocaleString('en-Us')}</CTableDataCell>
               <CTableDataCell>{loan.loanStatus}</CTableDataCell>
               <CTableDataCell>{loan.requestedDate}</CTableDataCell>
-              {(loan.loanStatus === 'FULFILLED' || loan.loanStatus === 'COMPLETED') && (
+              {(loan.loanStatus === 'ONGOING' || loan.loanStatus === 'COMPLETED') && (
                 <CTableDataCell onClick={() => viewInstallments(loan)}>
                   <CIcon
                     icon={cilExpandUp}

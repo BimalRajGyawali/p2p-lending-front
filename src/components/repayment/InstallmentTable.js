@@ -7,12 +7,33 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react'
-import React from 'react'
+import React, { useState } from 'react'
+import axios from 'axios'
 
 // eslint-disable-next-line react/prop-types
 const InstallmentTable = ({ installments, type }) => {
+  const btnStyle = { color: 'black' }
+
   const payInstallment = (installment) => {
-    //make request for pay
+    axios({
+      method: 'post',
+      url: 'http://localhost:8085/api/v1/payInstallment',
+      data: {
+        loanId: installment.loanRequest,
+        installmentId: installment.id,
+        email: localStorage.getItem('email'),
+      },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    })
+      .then((res) => {
+        console.log(res)
+        alert('Installment paid successfully')
+      })
+      .catch((err) => {
+        alert('Something went wrong')
+      })
   }
 
   return (
@@ -20,7 +41,7 @@ const InstallmentTable = ({ installments, type }) => {
       <CTable striped>
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell scope="col">#</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Installment No.</CTableHeaderCell>
             <CTableHeaderCell scope="col">Installment Amount</CTableHeaderCell>
             <CTableHeaderCell scope="col">Scheduled Date</CTableHeaderCell>
             <CTableHeaderCell scope="col">Paid Date</CTableHeaderCell>
@@ -30,7 +51,7 @@ const InstallmentTable = ({ installments, type }) => {
           {/* eslint-disable-next-line react/prop-types */}
           {installments.map((installment, index) => (
             <CTableRow key={installment.id}>
-              <CTableDataCell>{index + 1}</CTableDataCell>
+              <CTableDataCell>{installment.installmentNumber}</CTableDataCell>
               <CTableDataCell>{installment.amount.toLocaleString('en-Us')}</CTableDataCell>
               <CTableDataCell>{installment.scheduledDate}</CTableDataCell>
               {type === 'PAID' ? (
@@ -40,7 +61,7 @@ const InstallmentTable = ({ installments, type }) => {
               )}
               {type === 'UNPAID' && (
                 <CTableDataCell>
-                  <CButton style={{ color: 'black' }} onClick={() => payInstallment(installment)}>
+                  <CButton style={btnStyle} onClick={() => payInstallment(installment)}>
                     Pay
                   </CButton>
                 </CTableDataCell>

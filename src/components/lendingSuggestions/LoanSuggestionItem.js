@@ -109,6 +109,7 @@ const LoanSuggestionItem = () => {
       })
       .catch((err) => {
         alert('Something went wrong')
+        console.log(err)
         setLendButtonLoading(false)
       })
   }
