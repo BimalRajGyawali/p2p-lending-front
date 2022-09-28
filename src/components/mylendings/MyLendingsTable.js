@@ -11,14 +11,15 @@ import {
 const MyLendingsTable = ({ lendings }) => {
   return (
     <>
-      <p style={{ marginBottom: '20px', marginTop: '50px', fontWeight: 'bold' }}>My Lendings</p>
+      <p style={{ marginBottom: '30px', fontWeight: 'bold' }}>My Lendings</p>
 
       <CTable striped>
         <CTableHead>
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
             <CTableHeaderCell scope="col">Amount</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Date</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Lent Date</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Status</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -30,7 +31,8 @@ const MyLendingsTable = ({ lendings }) => {
                 {lending.amount && lending.amount.toLocaleString('en-Us')}
               </CTableDataCell>
 
-              <CTableDataCell>{lending.date}</CTableDataCell>
+              <CTableDataCell>{lending.lentDate}</CTableDataCell>
+              <CTableDataCell>{lending.status}</CTableDataCell>
             </CTableRow>
           ))}
         </CTableBody>
