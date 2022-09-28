@@ -79,7 +79,7 @@ const ViewInstallments = () => {
         <CAccordionItem>
           <CAccordionHeader>Missed Installments</CAccordionHeader>
           <CAccordionBody>
-            {missedInstallments.length > 0 && (
+            {missedInstallments.length > 0 ? (
               <CCard>
                 <CCardBody>
                   <CCardText>
@@ -92,6 +92,8 @@ const ViewInstallments = () => {
                   </CCardText>
                 </CCardBody>
               </CCard>
+            ) : (
+              <p style={{ fontStyle: 'italic' }}>Missed installments will appear here</p>
             )}
           </CAccordionBody>
         </CAccordionItem>
@@ -99,7 +101,7 @@ const ViewInstallments = () => {
         <CAccordionItem style={{ marginTop: '20px' }}>
           <CAccordionHeader>Paid Installments</CAccordionHeader>
           <CAccordionBody>
-            {paidInstallments.length > 0 && (
+            {paidInstallments.length > 0 ? (
               <CCard>
                 <CCardBody>
                   <CCardText>
@@ -112,6 +114,8 @@ const ViewInstallments = () => {
                   </CCardText>
                 </CCardBody>
               </CCard>
+            ) : (
+              <p style={{ fontStyle: 'italic' }}>Paid installments will appear here</p>
             )}
           </CAccordionBody>
         </CAccordionItem>
