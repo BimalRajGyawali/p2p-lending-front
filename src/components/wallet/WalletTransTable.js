@@ -14,6 +14,10 @@ const WalletTransTable = ({ transactions }) => {
       return {
         color: 'red',
       }
+    } else if (type === 'LOCKED') {
+      return {
+        color: 'blue',
+      }
     } else {
       return {
         color: 'green',
