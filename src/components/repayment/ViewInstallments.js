@@ -64,7 +64,7 @@ const ViewInstallments = () => {
           <CCardBody>
             <CCardText>
               <div>
-                <p style={{ fontWeight: '500', marginBottom: '25px' }}>Scheduled Installment</p>
+                <p style={{ fontWeight: '500', marginBottom: '25px' }}>Upcoming Installment</p>
                 <InstallmentTable
                   installments={upcomingInstallments}
                   type={installmentTypes.UNPAID}
