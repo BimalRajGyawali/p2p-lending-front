@@ -75,7 +75,7 @@ const MyLendingsTable = ({ lendings }) => {
                 {lending.amount && lending.amount.toLocaleString('en-Us')}
               </CTableDataCell>
 
-              <CTableDataCell>{lending.lentDate}</CTableDataCell>
+              <CTableDataCell>{new Date(lending.lentDate).toLocaleString()}</CTableDataCell>
               <CTableDataCell>{lending.status}</CTableDataCell>
               {lending.status === 'DISBURSED' && (
                 <CTableDataCell onClick={() => handleModalView(lending.lendingId)}>
@@ -111,7 +111,7 @@ const MyLendingsTable = ({ lendings }) => {
                     <CTableDataCell>
                       {interest.amount && interest.amount.toLocaleString('en-Us')}
                     </CTableDataCell>
-                    <CTableDataCell>{interest.date}</CTableDataCell>
+                    <CTableDataCell>{new Date(interest.date).toLocaleString()}</CTableDataCell>
                   </CTableRow>
                 ))}
               </CTableBody>
