@@ -69,7 +69,7 @@ const MyLendingsTable = ({ lendings }) => {
         <CTableBody>
           {/* eslint-disable-next-line react/prop-types */}
           {lendings.map((lending, index) => (
-            <CTableRow key={lending.id}>
+            <CTableRow key={lending.lendingId}>
               <CTableDataCell>{index + 1}</CTableDataCell>
               <CTableDataCell>
                 {lending.amount && lending.amount.toLocaleString('en-Us')}
@@ -78,7 +78,7 @@ const MyLendingsTable = ({ lendings }) => {
               <CTableDataCell>{lending.lentDate}</CTableDataCell>
               <CTableDataCell>{lending.status}</CTableDataCell>
               {lending.status === 'DISBURSED' && (
-                <CTableDataCell onClick={() => handleModalView(lending.id)}>
+                <CTableDataCell onClick={() => handleModalView(lending.lendingId)}>
                   <CIcon icon={cilExpandUp} style={{ cursor: 'pointer' }} title={'View Returns'} />
                 </CTableDataCell>
               )}

@@ -13,8 +13,10 @@ import axios from 'axios'
 // eslint-disable-next-line react/prop-types
 const InstallmentTable = ({ installments, type }) => {
   const btnStyle = { color: 'black' }
+  const [payLoading, setPayLoading] = useState(false)
 
   const payInstallment = (installment) => {
+    setPayLoading(true)
     axios({
       method: 'post',
       url: 'http://localhost:8085/api/v1/payInstallment',
@@ -30,9 +32,13 @@ const InstallmentTable = ({ installments, type }) => {
       .then((res) => {
         console.log(res)
         alert('Installment paid successfully')
+        setPayLoading(false)
+        window.location.reload()
       })
       .catch((err) => {
+        console.log(err)
         alert('Something went wrong')
+        setPayLoading(false)
       })
   }
 
@@ -62,7 +68,13 @@ const InstallmentTable = ({ installments, type }) => {
               {type === 'UNPAID' && (
                 <CTableDataCell>
                   <CButton style={btnStyle} onClick={() => payInstallment(installment)}>
-                    Pay
+                    {payLoading ? (
+                      <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div>
+                    ) : (
+                      <>&nbsp;&nbsp;Pay&nbsp;&nbsp;</>
+                    )}
                   </CButton>
                 </CTableDataCell>
               )}
