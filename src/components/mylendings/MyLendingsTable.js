@@ -13,6 +13,7 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilExpandUp } from '@coreui/icons'
+import axios from 'axios'
 // eslint-disable-next-line react/prop-types
 const MyLendingsTable = ({ lendings }) => {
   const [visible, setVisible] = useState(false)
@@ -27,14 +28,27 @@ const MyLendingsTable = ({ lendings }) => {
 
     if (newState) {
       // make api request
-      //setModalLoading(false)
-      setInterests([
-        {
-          id: 123,
-          amount: 5000,
-          date: '2020-01-02',
+      axios({
+        method: 'post',
+        url: 'http://localhost:8082/api/v1/getLendingInterests',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
-      ])
+        data: {
+          lendingId,
+        },
+      })
+        .then((res) => {
+          console.log(res)
+          setInterests(res.data.data)
+          setModalLoading(false)
+        })
+        .catch((err) => {
+          console.log(err)
+          alert('Something went wrong')
+          setModalLoading(false)
+          setVisible(false)
+        })
     }
   }
 
@@ -55,7 +69,7 @@ const MyLendingsTable = ({ lendings }) => {
         <CTableBody>
           {/* eslint-disable-next-line react/prop-types */}
           {lendings.map((lending, index) => (
-            <CTableRow key={lending.id}>
+            <CTableRow key={lending.lendingId}>
               <CTableDataCell>{index + 1}</CTableDataCell>
               <CTableDataCell>
                 {lending.amount && lending.amount.toLocaleString('en-Us')}
@@ -64,7 +78,7 @@ const MyLendingsTable = ({ lendings }) => {
               <CTableDataCell>{lending.lentDate}</CTableDataCell>
               <CTableDataCell>{lending.status}</CTableDataCell>
               {lending.status === 'DISBURSED' && (
-                <CTableDataCell onClick={() => handleModalView(lending.id)}>
+                <CTableDataCell onClick={() => handleModalView(lending.lendingId)}>
                   <CIcon icon={cilExpandUp} style={{ cursor: 'pointer' }} title={'View Returns'} />
                 </CTableDataCell>
               )}
