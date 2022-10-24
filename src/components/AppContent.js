@@ -1,13 +1,23 @@
-import React, { Suspense } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
-import { CContainer, CSpinner } from '@coreui/react'
+import React, {Suspense, useState} from 'react'
+import {Navigate, Route, Routes} from 'react-router-dom'
+import {CAlert, CContainer, CSpinner} from '@coreui/react'
+import '../scss/style.scss'
+
 
 // routes config
 import routes from '../routes'
 
-const AppContent = () => {
+// eslint-disable-next-line react/prop-types
+const AppContent = ({ notificationData } ) => {
+  const [visible, setVisible] = useState(true)
   return (
     <CContainer lg>
+
+      {JSON.parse(JSON.stringify(notificationData)).message &&
+        <CAlert color="primary" dismissible visible={visible}
+                onClose={() => setVisible(false)}>{JSON.parse(JSON.stringify(notificationData)).message}</CAlert>
+      }
+
       <Suspense fallback={<CSpinner color="primary" />}>
         <Routes>
           {routes.map((route, idx) => {

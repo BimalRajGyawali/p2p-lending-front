@@ -1,5 +1,5 @@
-import React, { Component, Suspense } from 'react'
-import { HashRouter, Route, Routes } from 'react-router-dom'
+import React, {Suspense} from 'react'
+import {HashRouter, Route, Routes} from 'react-router-dom'
 import './scss/style.scss'
 import EmailField from './components/registration/EmailField'
 import OtpField from './components/registration/OtpField'
@@ -12,30 +12,30 @@ import DefaultLayout from './layout/DefaultLayout'
 
 const loading = (
   <div className="pt-3 text-center">
-    <div className="sk-spinner sk-spinner-pulse" />
+    <div className="sk-spinner sk-spinner-pulse"/>
   </div>
 )
 
-class App extends Component {
-  render() {
-    return (
-      <HashRouter>
-        <Suspense fallback={loading}>
-          <Routes>
-            <Route exact path="/login" name="Login Page" element={<Login />} />
-            <Route path="/register" name="Register Page" element={<Register />}>
-              <Route path="" element={<EmailField />} />
-              <Route path="otp" element={<OtpField />} />
-              <Route path="password" element={<PasswordField />} />
-            </Route>
-            <Route exact path="/500" name="Page 500" element={<Page500 />} />
-            <Route path="/404" name="Page 404" element={<Page404 />} />
-            <Route exact path="*" name="Home" element={<DefaultLayout />} />
-          </Routes>
-        </Suspense>
-      </HashRouter>
-    )
-  }
+const App = () => {
+
+  return (
+    <HashRouter>
+      <Suspense fallback={loading}>
+        <Routes>
+          <Route exact path="/login" name="Login Page" element={<Login/>}/>
+          <Route path="/register" name="Register Page" element={<Register/>}>
+            <Route path="" element={<EmailField/>}/>
+            <Route path="otp" element={<OtpField/>}/>
+            <Route path="password" element={<PasswordField/>}/>
+          </Route>
+          <Route exact path="/500" name="Page 500" element={<Page500/>}/>
+          <Route path="/404" name="Page 404" element={<Page404/>}/>
+          <Route exact path="*" name="Home" element={<DefaultLayout/>}/>
+        </Routes>
+      </Suspense>
+    </HashRouter>
+  )
+
 }
 
 export default App
