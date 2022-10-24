@@ -1,7 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import {AppContent, AppFooter, AppHeader, AppSidebar} from '../components/index'
 import {useNavigate} from 'react-router-dom'
 import eventSourceService from '../sse/EventSourceService'
+
+import ToastSound from '../assets/audio/toast_sound.mp3'
 
 const DefaultLayout = () => {
   const navigate = useNavigate()
@@ -14,7 +16,9 @@ const DefaultLayout = () => {
       eventSourceService.subscribe(`http://localhost:8082/sse/subscribe/${localStorage.getItem('email')}`)
 
       eventSourceService.onmessage(data => {
-        alert(JSON.parse(data).message)
+        const audio = new Audio(ToastSound)
+        audio.play().then(() =>  alert(JSON.parse(data).message));
+
       })
 
       return () => {
