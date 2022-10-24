@@ -17,7 +17,8 @@ const DefaultLayout = () => {
 
       eventSourceService.onmessage(data => {
         const audio = new Audio(ToastSound)
-        audio.play().then(() =>  alert(JSON.parse(data).message));
+        audio.play().then(() =>  alert(JSON.parse(data).message))
+          .catch(err => alert(JSON.parse(data).message));
 
       })
 
