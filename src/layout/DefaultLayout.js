@@ -5,19 +5,16 @@ import eventSourceService from '../sse/EventSourceService'
 
 const DefaultLayout = () => {
   const navigate = useNavigate()
-  const [notificationData, setNotificationData] = useState({
-       userId: '',
-      message: ''
-  })
+
 
   useEffect(() => {
     if (!localStorage.getItem('role')) {
       navigate('/login')
     }else {
-      eventSourceService.subscribe('http://localhost:8082/sse/subscribe')
+      eventSourceService.subscribe(`http://localhost:8082/sse/subscribe/${localStorage.getItem('email')}`)
 
       eventSourceService.onmessage(data => {
-        setNotificationData(JSON.parse(data))
+        alert(JSON.parse(data).message)
       })
 
       return () => {
@@ -33,7 +30,7 @@ const DefaultLayout = () => {
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
         <AppHeader />
         <div className="body flex-grow-1 px-3">
-          <AppContent notificationData={notificationData}/>
+          <AppContent notificationData />
         </div>
         <AppFooter />
       </div>
