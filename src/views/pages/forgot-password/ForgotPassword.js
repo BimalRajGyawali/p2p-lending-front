@@ -1,8 +1,12 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import ReactImg from 'src/assets/images/p2plogo.jpeg'
+import { BeatLoader } from 'react-spinners'
+import { useNavigate } from 'react-router-dom'
 
 const ForgotPassword = () => {
+  const navigate = useNavigate()
+
   const [email, setEmail] = useState('')
   const [serverErrorMsg, setServerErrorMessage] = useState('')
   const [responseMsg, setResponseMsg] = useState('')
@@ -23,6 +27,9 @@ const ForgotPassword = () => {
       .then(res => {
         console.log(res.data)
         setResponseMsg(res.data.message)
+        setTimeout(() => {
+          navigate('/path')
+        }, 3000)
       })
       .catch(err => {
         if (err.response.data && err.response.data.error) {
@@ -77,9 +84,9 @@ const ForgotPassword = () => {
                   type='submit'
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Submitting...' : 'Reset Password'}
+                  {isSubmitting ? 'Submitting ' : 'Reset Password'}
+                  {isSubmitting && <BeatLoader size={8} color='#fff' />}
                 </button>
-                {isSubmitting && <div>Spinner</div>}
               </div>
               <hr className='mb-6 border-t' />
               <div className='text-center bg-red-500'>

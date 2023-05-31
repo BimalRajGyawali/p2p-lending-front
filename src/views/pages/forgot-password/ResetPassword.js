@@ -1,5 +1,7 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
+import { BeatLoader } from 'react-spinners'
+import { useNavigate } from 'react-router-dom'
 
 import {
   BrowserRouter as Router,
@@ -9,6 +11,7 @@ import {
 import ReactImg from 'src/assets/images/p2plogo.jpeg'
 
 const ResetPassword = () => {
+  const navigate = useNavigate()
   const [token, setToken] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
@@ -46,6 +49,9 @@ const ResetPassword = () => {
       .then(res => {
         console.log(res.data)
         setResponseMsg(res.data.message)
+        setTimeout(() => {
+          navigate('/path')
+        }, 3000)
       })
       .catch(err => {
         if (err.response.data && err.response.data.error) {
@@ -69,7 +75,7 @@ const ResetPassword = () => {
           ></div>
           <div className='w-full lg:w-1/2 bg-white p-5 rounded-lg lg:rounded-l-none'>
             <div className='px-8 mb-4 text-center'>
-              <h3 className='pt-4 mb-2 text-2xl'>Reset Your Password</h3>
+              <h3 className='pt-4 mb-2 text-2xl'>Enter New Password</h3>
               <p className='mb-4 text-sm text-gray-700'></p>
             </div>
 
@@ -82,7 +88,7 @@ const ResetPassword = () => {
                   className='block mb-2 text-sm font-bold text-gray-700'
                   htmlFor='password'
                 >
-                  Password
+                  New Password
                 </label>
                 <input
                   className='w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
@@ -99,7 +105,7 @@ const ResetPassword = () => {
                   className='block mb-2 text-sm font-bold text-gray-700'
                   htmlFor='confirmPassword'
                 >
-                  Confirm Password
+                  Confirm New Password
                 </label>
                 <input
                   className='w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline'
@@ -117,9 +123,9 @@ const ResetPassword = () => {
                   type='submit'
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Submitting...' : 'Reset Password'}
+                  {isSubmitting ? 'Submitting ' : 'Reset Password'}
+                  {isSubmitting && <BeatLoader size={8} color='#fff' />}{' '}
                 </button>
-                {isSubmitting && <div>Spinner</div>}
               </div>
               <hr className='mb-6 border-t' />
               <div className='text-center bg-red-500'>
