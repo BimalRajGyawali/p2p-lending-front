@@ -12,7 +12,7 @@ import {
   CFormInput,
   CInputGroup,
   CInputGroupText,
-  CRow,
+  CRow
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
@@ -30,14 +30,14 @@ const Login = () => {
   const handleLogin = () => {
     axios
       .post('http://localhost:8081/authenticate', { email: username, password })
-      .then((res) => {
+      .then(res => {
         console.log(res.data)
         localStorage.setItem('accessToken', res.data.data.token)
         localStorage.setItem('email', username)
         localStorage.setItem('role', res.data.data.role)
         navigate('/')
       })
-      .catch((err) => {
+      .catch(err => {
         if (err.response.data && err.response.data.error) {
           setServerErrorMsg(err.response.data.error)
         } else {
@@ -46,45 +46,45 @@ const Login = () => {
       })
   }
 
-  const handleUsernameChange = (e) => {
+  const handleUsernameChange = e => {
     setUsername(e.target.value)
   }
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = e => {
     setPassword(e.target.value)
   }
 
   return (
-    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+    <div className='bg-light min-vh-100 d-flex flex-row align-items-center'>
       <CContainer>
-        <CRow className="justify-content-center">
+        <CRow className='justify-content-center'>
           <CCol md={8}>
             <CCardGroup>
-              <CCard className="p-4">
+              <CCard className='p-4'>
                 <CCardBody>
                   <CForm>
                     <h1>Sign In to your account</h1>
-                    <div className="mt-4" />
-                    <p className="mt-2 mb-3 text-red-500">{serverErrorMsg}</p>
-                    <CInputGroup className="mb-3">
+                    <div className='mt-4' />
+                    <p className='mt-2 mb-3 text-red-500'>{serverErrorMsg}</p>
+                    <CInputGroup className='mb-3'>
                       <CInputGroupText>
                         <CIcon icon={cilUser} />
                       </CInputGroupText>
                       <CFormInput
-                        placeholder="Username"
-                        autoComplete="username"
+                        placeholder='Username'
+                        autoComplete='username'
                         value={username}
                         onChange={handleUsernameChange}
                       />
                     </CInputGroup>
-                    <CInputGroup className="mb-4">
+                    <CInputGroup className='mb-4'>
                       <CInputGroupText>
                         <CIcon icon={cilLockLocked} />
                       </CInputGroupText>
                       <CFormInput
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="current-password"
+                        type='password'
+                        placeholder='Password'
+                        autoComplete='current-password'
                         value={password}
                         onChange={handlePasswordChange}
                       />
@@ -92,8 +92,8 @@ const Login = () => {
                     <CRow>
                       <CCol xs={6}>
                         <CButton
-                          color="primary"
-                          className="px-4"
+                          color='primary'
+                          className='px-4'
                           style={{ background: 'blue' }}
                           onClick={handleLogin}
                         >
@@ -101,19 +101,36 @@ const Login = () => {
                         </CButton>
                       </CCol>
                     </CRow>
+                    <CRow>
+                      <CCol xs={6}>
+                        <Link to='/forgot-password'>
+                          <h1 className='mt-4 text-red-500 cursor-pointer'>
+                            Forgot password?
+                          </h1>
+                        </Link>
+                      </CCol>
+                    </CRow>
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
+              <CCard
+                className='text-white bg-primary py-5'
+                style={{ width: '44%' }}
+              >
+                <CCardBody className='text-center'>
                   <div>
                     <h2>Sign up</h2>
                     <p>
-                      Be a borrower for hassle free loan with best interest rates. Be a lender for
-                      lending at higher rates.
+                      Be a borrower for hassle free loan with best interest
+                      rates. Be a lender for lending at higher rates.
                     </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
+                    <Link to='/register'>
+                      <CButton
+                        color='primary'
+                        className='mt-3'
+                        active
+                        tabIndex={-1}
+                      >
                         Register Now!
                       </CButton>
                     </Link>
