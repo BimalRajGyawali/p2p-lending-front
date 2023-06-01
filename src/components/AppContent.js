@@ -1,8 +1,7 @@
-import React, {Suspense} from 'react'
-import {Navigate, Route, Routes} from 'react-router-dom'
-import {CContainer, CSpinner} from '@coreui/react'
+import React, { Suspense } from 'react'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { CContainer, CSpinner } from '@coreui/react'
 import '../scss/style.scss'
-
 
 // routes config
 import routes from '../routes'
@@ -11,8 +10,7 @@ import routes from '../routes'
 const AppContent = () => {
   return (
     <CContainer lg>
-
-      <Suspense fallback={<CSpinner color="primary" />}>
+      <Suspense fallback={<CSpinner color='primary' />}>
         <Routes>
           {routes.map((route, idx) => {
             return (
@@ -28,11 +26,17 @@ const AppContent = () => {
             )
           })}
           {localStorage.getItem('role') === 'BORROWER' && (
-            <Route path="/" element={<Navigate to="kyc" replace />} />
+            <Route path='/' element={<Navigate to='kyc' replace />} />
           )}
 
           {localStorage.getItem('role') === 'LENDER' && (
-            <Route path="/" element={<Navigate to="loanSuggestions" replace />} />
+            <Route
+              path='/'
+              element={<Navigate to='loanSuggestions' replace />}
+            />
+          )}
+          {localStorage.getItem('role') === 'ADMIN' && (
+            <Route path='/' element={<Navigate to='unverifiedKYC' replace />} />
           )}
         </Routes>
       </Suspense>

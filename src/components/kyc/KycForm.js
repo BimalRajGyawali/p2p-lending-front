@@ -1,4 +1,11 @@
-import { CButton, CCol, CForm, CFormInput, CFormSelect, CSpinner } from '@coreui/react'
+import {
+  CButton,
+  CCol,
+  CForm,
+  CFormInput,
+  CFormSelect,
+  CSpinner
+} from '@coreui/react'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
@@ -10,7 +17,7 @@ const KycForm = () => {
     province: '',
     municipality: '',
     ward: '',
-    tole: '',
+    tole: ''
   })
 
   const [permanentAddr, setPermanentAddr] = useState({
@@ -18,14 +25,14 @@ const KycForm = () => {
     province: '',
     municipality: '',
     ward: '',
-    tole: '',
+    tole: ''
   })
 
   const [contact, setContact] = useState({
     otherEmail: '',
     telephone: '',
     primaryMobile: '',
-    secondaryMobile: '',
+    secondaryMobile: ''
   })
 
   const [kyc, setKyc] = useState({
@@ -39,7 +46,7 @@ const KycForm = () => {
     maritalStatus: '',
     verificationStatus: '',
     citizenShipFrontPath: '',
-    citizenShipBackPath: '',
+    citizenShipBackPath: ''
   })
 
   const [citizenShipFront, setCitizenShipFront] = useState(null)
@@ -69,20 +76,20 @@ const KycForm = () => {
     setContact({ ...contact, [key]: e.target.value })
   }
 
-  const handleCitizenShipFront = (e) => {
+  const handleCitizenShipFront = e => {
     setCitizenShipFront(e.target.files[0])
   }
 
-  const handleCitizenShipBack = (e) => {
+  const handleCitizenShipBack = e => {
     setCitizenShipBack(e.target.files[0])
   }
 
   const populateForm = () => {
     axios
       .post('http://localhost:8081/registration/getKYC', {
-        email: localStorage.getItem('email'),
+        email: localStorage.getItem('email')
       })
-      .then((res) => {
+      .then(res => {
         console.log(res.data.data)
         setKyc({
           ...kyc,
@@ -96,7 +103,7 @@ const KycForm = () => {
           maritalStatus: res.data.data.maritalStatus,
           verificationStatus: res.data.data.verified,
           citizenShipFrontPath: res.data.data.citizenShipPhotoFront,
-          citizenShipBackPath: res.data.data.citizenShipPhotoBack,
+          citizenShipBackPath: res.data.data.citizenShipPhotoBack
         })
         setTempAddr({
           ...tempAddr,
@@ -104,7 +111,7 @@ const KycForm = () => {
           province: address(res.data.data.temporaryAddress, 1),
           municipality: address(res.data.data.temporaryAddress, 2),
           ward: address(res.data.data.temporaryAddress, 3),
-          tole: address(res.data.data.temporaryAddress, 4),
+          tole: address(res.data.data.temporaryAddress, 4)
         })
         setPermanentAddr({
           ...permanentAddr,
@@ -112,17 +119,17 @@ const KycForm = () => {
           province: address(res.data.data.permanentAddress, 1),
           municipality: address(res.data.data.permanentAddress, 2),
           ward: address(res.data.data.permanentAddress, 3),
-          tole: address(res.data.data.permanentAddress, 4),
+          tole: address(res.data.data.permanentAddress, 4)
         })
         setContact({
           ...contact,
           primaryMobile: res.data.data.contact.primaryMobile,
           secondaryMobile: res.data.data.contact.secondaryMobile,
           telephone: res.data.data.contact.telephone,
-          otherEmail: res.data.data.contact.otherEmail,
+          otherEmail: res.data.data.contact.otherEmail
         })
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err)
       })
   }
@@ -158,7 +165,7 @@ const KycForm = () => {
       method: 'post',
       url: 'http://localhost:8081/registration/registerKYC',
       data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' },
+      headers: { 'Content-Type': 'multipart/form-data' }
     })
       .then(function (response) {
         setSubmitting(false)
@@ -173,245 +180,283 @@ const KycForm = () => {
   }
 
   return (
-    <CForm className="row g-3">
+    <CForm className='row g-3'>
       {kyc.verificationStatus !== '' && (
         <p style={{ marginBottom: '30px' }}>
           {kyc.verificationStatus ? (
-            <span style={{ color: 'green', fontSize: '1.1em' }}>Kyc Verified</span>
+            <span style={{ color: 'green', fontSize: '1.1em' }}>
+              Kyc Verified
+            </span>
           ) : (
-            <span style={{ color: 'red', fontSize: '1.1em' }}>Kyc Not Verified</span>
+            <span style={{ color: 'red', fontSize: '1.1em' }}>
+              Kyc Not Verified
+            </span>
           )}
         </p>
       )}
       <h2 style={{ fontWeight: 'bold' }}>Personal Information</h2>
       <CCol md={4}>
         <CFormInput
-          type="text"
-          id="firstName"
-          label="First Name"
+          type='text'
+          id='firstName'
+          label='First Name'
           value={kyc.firstName}
-          onChange={(e) => handleInputChange('firstName', e)}
+          onChange={e => handleInputChange('firstName', e)}
         />
       </CCol>
       <CCol md={4}>
         <CFormInput
-          type="text"
-          id="middleName"
-          label="Middle Name"
+          type='text'
+          id='middleName'
+          label='Middle Name'
           value={kyc.middleName}
-          onChange={(e) => handleInputChange('middleName', e)}
+          onChange={e => handleInputChange('middleName', e)}
         />
       </CCol>
       <CCol md={4}>
         <CFormInput
-          type="text"
-          id="lastName"
-          label="Last Name"
+          type='text'
+          id='lastName'
+          label='Last Name'
           value={kyc.lastName}
-          onChange={(e) => handleInputChange('lastName', e)}
+          onChange={e => handleInputChange('lastName', e)}
         />
       </CCol>
 
       <CCol md={4}>
         <CFormInput
-          type="date"
-          id="dob"
-          label="Date of Birth"
+          type='date'
+          id='dob'
+          label='Date of Birth'
           value={kyc.dob}
-          onChange={(e) => handleInputChange('dob', e)}
+          onChange={e => handleInputChange('dob', e)}
         />
       </CCol>
 
       <CCol md={4}>
         <CFormSelect
-          id="maritalStatus"
-          label="Marital Status"
-          onChange={(e) => handleInputChange('maritalStatus', e)}
+          id='maritalStatus'
+          label='Marital Status'
+          onChange={e => handleInputChange('maritalStatus', e)}
         >
-          <option selected={kyc.maritalStatus === 'Not Married'}>Not Married</option>
+          <option selected={kyc.maritalStatus === 'Not Married'}>
+            Not Married
+          </option>
           <option selected={kyc.maritalStatus === 'Married'}>Married</option>
           <option selected={kyc.maritalStatus === 'Divorced'}>Divorced</option>
         </CFormSelect>
       </CCol>
 
       <CCol md={4}>
-        <CFormSelect id="gender" label="Gender" onChange={(e) => handleInputChange('gender', e)}>
+        <CFormSelect
+          id='gender'
+          label='Gender'
+          onChange={e => handleInputChange('gender', e)}
+        >
           <option selected={kyc.gender === 'Female'}>Female</option>
           <option selected={kyc.gender === 'Male'}>Male</option>
           <option selected={kyc.gender === 'Other'}>Other</option>
         </CFormSelect>
       </CCol>
 
-      <div className="mt-5" />
+      <div className='mt-5' />
 
       <h2 style={{ fontWeight: 'bold' }}>Permanent Address</h2>
 
       <CCol md={3}>
         <CFormInput
-          id="district"
-          label="District"
+          id='district'
+          label='District'
           value={permanentAddr.district}
-          onChange={(e) => handlePermanentAddressChange('district', e)}
+          onChange={e => handlePermanentAddressChange('district', e)}
         />
       </CCol>
       <CCol md={2}>
         <CFormSelect
-          id="province"
-          label="Province"
-          onChange={(e) => handlePermanentAddressChange('province', e)}
+          id='province'
+          label='Province'
+          onChange={e => handlePermanentAddressChange('province', e)}
         >
-          <option selected={permanentAddr.province === 'Province 1'}>Province 1</option>
-          <option selected={permanentAddr.province === 'Province 2'}>Province 2</option>
-          <option selected={permanentAddr.province === 'Province 3'}>Province 3</option>
-          <option selected={permanentAddr.province === 'Province 4'}>Province 4</option>
-          <option selected={permanentAddr.province === 'Province 5'}>Province 5</option>
-          <option selected={permanentAddr.province === 'Province 6'}>Province 6</option>
-          <option selected={permanentAddr.province === 'Province 7'}>Province 7</option>
+          <option selected={permanentAddr.province === 'Province 1'}>
+            Province 1
+          </option>
+          <option selected={permanentAddr.province === 'Province 2'}>
+            Province 2
+          </option>
+          <option selected={permanentAddr.province === 'Province 3'}>
+            Province 3
+          </option>
+          <option selected={permanentAddr.province === 'Province 4'}>
+            Province 4
+          </option>
+          <option selected={permanentAddr.province === 'Province 5'}>
+            Province 5
+          </option>
+          <option selected={permanentAddr.province === 'Province 6'}>
+            Province 6
+          </option>
+          <option selected={permanentAddr.province === 'Province 7'}>
+            Province 7
+          </option>
         </CFormSelect>
       </CCol>
       <CCol md={3}>
         <CFormInput
-          id="municipality"
-          label="Municipality"
+          id='municipality'
+          label='Municipality'
           value={permanentAddr.municipality}
-          onChange={(e) => handlePermanentAddressChange('municipality', e)}
+          onChange={e => handlePermanentAddressChange('municipality', e)}
         />
       </CCol>
       <CCol md={2}>
         <CFormInput
-          id="ward"
-          label="Ward No."
+          id='ward'
+          label='Ward No.'
           value={permanentAddr.ward}
-          onChange={(e) => handlePermanentAddressChange('ward', e)}
+          onChange={e => handlePermanentAddressChange('ward', e)}
         />
       </CCol>
       <CCol md={2}>
         <CFormInput
-          id="tole"
-          label="Tole"
+          id='tole'
+          label='Tole'
           value={permanentAddr.tole}
-          onChange={(e) => handlePermanentAddressChange('tole', e)}
+          onChange={e => handlePermanentAddressChange('tole', e)}
         />
       </CCol>
-      <div className="mt-5" />
+      <div className='mt-5' />
 
       <h2 style={{ fontWeight: 'bold' }}>Temporary Address</h2>
 
       <CCol md={3}>
         <CFormInput
-          id="tempDistrict"
-          label="District"
+          id='tempDistrict'
+          label='District'
           value={tempAddr.district}
-          onChange={(e) => handleTempAddressChange('district', e)}
+          onChange={e => handleTempAddressChange('district', e)}
         />
       </CCol>
       <CCol md={2}>
         <CFormSelect
-          id="tempProvince"
-          label="Province"
-          onChange={(e) => handleTempAddressChange('province', e)}
+          id='tempProvince'
+          label='Province'
+          onChange={e => handleTempAddressChange('province', e)}
         >
-          <option selected={tempAddr.province === 'Province 1'}>Province 1</option>
-          <option selected={tempAddr.province === 'Province 2'}>Province 2</option>
-          <option selected={tempAddr.province === 'Province 3'}>Province 3</option>
-          <option selected={tempAddr.province === 'Province 4'}>Province 4</option>
-          <option selected={tempAddr.province === 'Province 5'}>Province 5</option>
-          <option selected={tempAddr.province === 'Province 6'}>Province 6</option>
-          <option selected={tempAddr.province === 'Province 7'}>Province 7</option>
+          <option selected={tempAddr.province === 'Province 1'}>
+            Province 1
+          </option>
+          <option selected={tempAddr.province === 'Province 2'}>
+            Province 2
+          </option>
+          <option selected={tempAddr.province === 'Province 3'}>
+            Province 3
+          </option>
+          <option selected={tempAddr.province === 'Province 4'}>
+            Province 4
+          </option>
+          <option selected={tempAddr.province === 'Province 5'}>
+            Province 5
+          </option>
+          <option selected={tempAddr.province === 'Province 6'}>
+            Province 6
+          </option>
+          <option selected={tempAddr.province === 'Province 7'}>
+            Province 7
+          </option>
         </CFormSelect>
       </CCol>
       <CCol md={3}>
         <CFormInput
-          id="tempMunicipality"
-          label="Municipality"
+          id='tempMunicipality'
+          label='Municipality'
           value={tempAddr.municipality}
-          onChange={(e) => handleTempAddressChange('municipality', e)}
+          onChange={e => handleTempAddressChange('municipality', e)}
         />
       </CCol>
       <CCol md={2}>
         <CFormInput
-          id="tempWard"
-          label="Ward No."
+          id='tempWard'
+          label='Ward No.'
           value={tempAddr.ward}
-          onChange={(e) => handleTempAddressChange('ward', e)}
+          onChange={e => handleTempAddressChange('ward', e)}
         />
       </CCol>
       <CCol md={2}>
         <CFormInput
-          id="tempTole"
-          label="Tole"
+          id='tempTole'
+          label='Tole'
           value={tempAddr.tole}
-          onChange={(e) => handleTempAddressChange('tole', e)}
+          onChange={e => handleTempAddressChange('tole', e)}
         />
       </CCol>
 
-      <div className="mt-5" />
+      <div className='mt-5' />
 
       <h2 style={{ fontWeight: 'bold' }}>Contact</h2>
       <CCol md={3}>
         <CFormInput
-          id="telephone"
-          label="Telephone"
+          id='telephone'
+          label='Telephone'
           value={contact.telephone}
-          onChange={(e) => handleContactChange('telephone', e)}
+          onChange={e => handleContactChange('telephone', e)}
         />
       </CCol>
 
       <CCol md={3}>
         <CFormInput
-          id="primaryMobile"
-          label="Primary Mobile"
+          id='primaryMobile'
+          label='Primary Mobile'
           value={contact.primaryMobile}
-          onChange={(e) => handleContactChange('primaryMobile', e)}
+          onChange={e => handleContactChange('primaryMobile', e)}
         />
       </CCol>
 
       <CCol md={3}>
         <CFormInput
-          id="secMobile"
-          label="Secondary Mobile"
+          id='secMobile'
+          label='Secondary Mobile'
           value={contact.secondaryMobile}
-          onChange={(e) => handleContactChange('secondaryMobile', e)}
+          onChange={e => handleContactChange('secondaryMobile', e)}
         />
       </CCol>
 
       <CCol md={3}>
         <CFormInput
-          type="email"
-          id="email"
-          label="Secondary Email"
+          type='email'
+          id='email'
+          label='Secondary Email'
           value={contact.otherEmail}
-          onChange={(e) => handleContactChange('otherEmail', e)}
+          onChange={e => handleContactChange('otherEmail', e)}
         />
       </CCol>
 
-      <div className="mt-5" />
+      <div className='mt-5' />
 
       <h2 style={{ fontWeight: 'bold' }}>Citizenship</h2>
 
       <CCol md={3}>
         <CFormInput
-          type="text"
-          id="citizenShipNumber"
-          label="CitizenShip Number"
+          type='text'
+          id='citizenShipNumber'
+          label='CitizenShip Number'
           value={kyc.citizenShipNumber}
-          onChange={(e) => handleInputChange('citizenShipNumber', e)}
+          onChange={e => handleInputChange('citizenShipNumber', e)}
         />
       </CCol>
       <CCol md={3}>
         <CFormInput
-          type="file"
-          id="citizenshipFront"
-          label="Front"
+          type='file'
+          id='citizenshipFront'
+          label='Front'
           onChange={handleCitizenShipFront}
         />
       </CCol>
 
       <CCol md={3}>
         <CFormInput
-          type="file"
-          id="citizenshipBack"
-          label="Back"
+          type='file'
+          id='citizenshipBack'
+          label='Back'
           onChange={handleCitizenShipBack}
         />
       </CCol>
@@ -446,25 +491,25 @@ const KycForm = () => {
         )}
       </div>
 
-      <div className="mt-4" />
+      <div className='mt-4' />
 
       <CCol xs={12}>
         {submitting ? (
           <CButton
             disabled={true}
-            className="mb-3"
+            className='mb-3'
             style={{ background: 'navy' }}
-            type="submit"
+            type='submit'
             onClick={submitKycForm}
           >
-            <CSpinner component="span" size="sm" />
+            <CSpinner component='span' size='sm' />
             &nbsp;Submitting
           </CButton>
         ) : (
           <CButton
-            className="mb-3"
+            className='mb-3'
             style={{ background: 'navy' }}
-            type="submit"
+            type='submit'
             onClick={submitKycForm}
           >
             Submit
