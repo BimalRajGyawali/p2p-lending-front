@@ -494,26 +494,51 @@ const KycForm = () => {
       <div className='mt-4' />
 
       <CCol xs={12}>
-        {submitting ? (
-          <CButton
-            disabled={true}
-            className='mb-3'
-            style={{ background: 'navy' }}
-            type='submit'
-            onClick={submitKycForm}
-          >
-            <CSpinner component='span' size='sm' />
-            &nbsp;Submitting
-          </CButton>
-        ) : (
-          <CButton
-            className='mb-3'
-            style={{ background: 'navy' }}
-            type='submit'
-            onClick={submitKycForm}
-          >
-            Submit
-          </CButton>
+        {localStorage.getItem('role') === 'ADMIN' && (
+          <>
+            <CButton
+              className='mb-3'
+              style={{ background: 'navy' }}
+              type='submit'
+              onClick={submitKycForm}
+            >
+              APPOVE KYC
+            </CButton>
+            <CButton
+              className='mb-3'
+              style={{ background: 'navy' }}
+              type='submit'
+              onClick={submitKycForm}
+            >
+              Request for Change
+            </CButton>
+          </>
+        )}
+
+        {localStorage.getItem('role') === 'BORROWER' && (
+          <>
+            {submitting ? (
+              <CButton
+                disabled={true}
+                className='mb-3'
+                style={{ background: 'navy' }}
+                type='submit'
+                onClick={submitKycForm}
+              >
+                <CSpinner component='span' size='sm' />
+                &nbsp;Submitting
+              </CButton>
+            ) : (
+              <CButton
+                className='mb-3'
+                style={{ background: 'navy' }}
+                type='submit'
+                onClick={submitKycForm}
+              >
+                Submit
+              </CButton>
+            )}
+          </>
         )}
       </CCol>
     </CForm>

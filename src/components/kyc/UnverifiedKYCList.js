@@ -4,7 +4,7 @@ import UnververifiedKYCTable from './UnverifiedKYCTable'
 import axios from 'axios'
 
 const UnverifiedKYCList = () => {
-  const [myLendings, setMyLendings] = useState([])
+  const [unverifiedKYCList, setUnverifieKYC] = useState([])
 
   useEffect(() => {
     axios({
@@ -16,7 +16,7 @@ const UnverifiedKYCList = () => {
     })
       .then(res => {
         console.log(res)
-        setMyLendings(res.data.data)
+        setUnverifieKYC(res.data.data)
       })
       .catch(err => {
         alert('Something went wrong')
@@ -28,9 +28,9 @@ const UnverifiedKYCList = () => {
       <CCard>
         <CCardBody>
           <CCardText>
-            {myLendings.length > 0 ? (
+            {unverifiedKYCList.length > 0 ? (
               <div>
-                <UnververifiedKYCTable lendings={myLendings} />
+                <UnververifiedKYCTable unverifiedKYCList={unverifiedKYCList} />
               </div>
             ) : (
               <p
