@@ -13,10 +13,16 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilExpandUp } from '@coreui/icons'
-import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+
 // eslint-disable-next-line react/prop-types
 const UnververifiedKYCTable = ({ unverifiedKYCList }) => {
   const [visible, setVisible] = useState(false)
+  const navigate = useNavigate()
+
+  const handleViewKyc = email => {
+    navigate(`/kyc/${email}`)
+  }
 
   return (
     <>
@@ -43,7 +49,7 @@ const UnververifiedKYCTable = ({ unverifiedKYCList }) => {
               <CTableDataCell>{unverifiedKYC.userType}</CTableDataCell>
               <CTableDataCell>{unverifiedKYC.email}</CTableDataCell>
               <CTableDataCell
-              //onClick={() => handleModalView(unverifiedKYC.lendingId)}
+                onClick={() => handleViewKyc(unverifiedKYC.email)}
               >
                 <CIcon
                   icon={cilExpandUp}

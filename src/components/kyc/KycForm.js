@@ -4,12 +4,18 @@ import {
   CForm,
   CFormInput,
   CFormSelect,
-  CSpinner
+  CSpinner,
+  CFormLabel,
+  CFormTextarea
 } from '@coreui/react'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
 const KycForm = () => {
+  const params = useParams()
+  console.log(params)
+
   const [submitting, setSubmitting] = useState(false)
 
   const [tempAddr, setTempAddr] = useState({
@@ -87,7 +93,7 @@ const KycForm = () => {
   const populateForm = () => {
     axios
       .post('http://localhost:8081/registration/getKYC', {
-        email: localStorage.getItem('email')
+        email: params.email ? params.email : localStorage.getItem('email')
       })
       .then(res => {
         console.log(res.data.data)
@@ -492,13 +498,24 @@ const KycForm = () => {
       </div>
 
       <div className='mt-4' />
+      <div className='mb-3'>
+        <CFormLabel htmlFor='exampleFormControlTextarea1'>
+          Admin Message
+        </CFormLabel>
+        <CFormTextarea
+          id='exampleFormControlTextarea1'
+          rows={3}
+        ></CFormTextarea>
+      </div>
+
+      <div className='mt-4' />
 
       <CCol xs={12}>
         {localStorage.getItem('role') === 'ADMIN' && (
           <>
             <CButton
               className='mb-3'
-              style={{ background: 'navy' }}
+              style={{ background: 'navy', marginRight: '20px' }}
               type='submit'
               onClick={submitKycForm}
             >

@@ -105,6 +105,7 @@ const routes = [
   { path: '/widgets', name: 'Widgets', element: Widgets },
 
   { path: '/kyc', name: 'Kyc', element: KycForm },
+  { path: '/kyc/:email', name: 'KycAdmin', element: KycForm },
 
   { path: '/loanRequest', name: 'LoanRequest', element: LoanRequestPage },
   {
