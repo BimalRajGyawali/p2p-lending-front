@@ -1,3 +1,61 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.notification-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.notification-icon > svg {
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+}
+
+.notification-count {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+}
+
+.notification-badge {
+  position: relative;
+  display: inline-block;
+}
+
+.notification-badge::after {
+  content: '';
+  position: absolute;
+  top: -0.25rem;
+  right: -0.25rem;
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: white;
+  border: 2px solid red;
+  border-radius: 50%;
+}
+
+.notification-badge > .notification-count {
+  position: absolute;
+  top: -0.5rem;
+  right: -0.5rem;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8rem;
+}

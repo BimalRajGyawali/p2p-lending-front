@@ -7,7 +7,8 @@ import {
   CDropdownHeader,
   CDropdownItem,
   CDropdownMenu,
-  CDropdownToggle
+  CDropdownToggle,
+  CNavLink
 } from '@coreui/react'
 import {
   cilBell,
@@ -24,36 +25,16 @@ import CIcon from '@coreui/icons-react'
 
 import avatar8 from './../../assets/images/avatars/8.jpg'
 import { useNavigate } from 'react-router-dom'
+import NotificationBadge from './NotificationBadge'
 
-const AppHeaderDropdown = () => {
-  const navigate = useNavigate()
-
-  const handleLogout = e => {
-    e.preventDefault()
-    console.log('logout')
-    localStorage.setItem('email', '')
-    localStorage.setItem('role', '')
-    localStorage.setItem('accessToken', '')
-
-    navigate('/login')
-  }
-
+const NotificationDropdown = () => {
+  const itemsCount = 5 // Replace with the actual count of items
   return (
-    <CDropdown variant='nav-item'>
-      <CDropdownToggle placement='bottom-end' className='py-0' caret={false}>
-        <div
-          style={{
-            borderRadius: '50%',
-            backgroundColor: 'navy',
-            color: 'white',
-            height: '30px',
-            width: '30px',
-            textAlign: 'center',
-            lineHeight: '30px'
-          }}
-        >
-          {localStorage.getItem('email') &&
-            localStorage.getItem('email').charAt(0).toUpperCase()}
+    <CDropdown inNav className='c-header-nav-item mx-2'>
+      <CDropdownToggle className='c-header-nav-link' caret={false}>
+        <div className='notification-icon'>
+          <CIcon icon={cilBell} size='lg' />
+          <NotificationBadge count={itemsCount} />
         </div>
       </CDropdownToggle>
       <CDropdownMenu className='pt-0' placement='bottom-end'>
@@ -62,7 +43,7 @@ const AppHeaderDropdown = () => {
           Profile
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem onClick={handleLogout}>
+        <CDropdownItem>
           <CIcon icon={cilLockLocked} className='me-2' />
           Logout
         </CDropdownItem>
@@ -71,4 +52,4 @@ const AppHeaderDropdown = () => {
   )
 }
 
-export default AppHeaderDropdown
+export default NotificationDropdown

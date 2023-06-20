@@ -8,20 +8,20 @@ const _lender_nav = [
     component: CNavItem,
     name: 'Loan Suggestions',
     to: '/loanSuggestions',
-    icon: <CIcon icon={cilLightbulb} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilLightbulb} customClassName='nav-icon' />
   },
   {
     component: CNavItem,
     name: 'Wallet',
     to: '/lenderWallet',
-    icon: <CIcon icon={cilWallet} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilWallet} customClassName='nav-icon' />
   },
   {
     component: CNavItem,
     name: 'My Lendings',
     to: '/lendings',
-    icon: <CIcon icon={cilMoney} customClassName="nav-icon" />,
-  },
+    icon: <CIcon icon={cilMoney} customClassName='nav-icon' />
+  }
 ]
 
 export default _lender_nav

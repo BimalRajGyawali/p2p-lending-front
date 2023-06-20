@@ -6,7 +6,8 @@ import {
   CFormSelect,
   CSpinner,
   CFormLabel,
-  CFormTextarea
+  CFormTextarea,
+  CAlert
 } from '@coreui/react'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -25,6 +26,7 @@ const KycForm = () => {
     ward: '',
     tole: ''
   })
+  const [serverErrorMsg, setServerErrorMsg] = useState('')
 
   const [permanentAddr, setPermanentAddr] = useState({
     district: '',
@@ -57,6 +59,8 @@ const KycForm = () => {
 
   const [citizenShipFront, setCitizenShipFront] = useState(null)
   const [citizenShipBack, setCitizenShipBack] = useState(null)
+  const [message, setMessage] = useState('')
+  const [adminKycMessage, setAdminKycMessage] = useState('')
 
   const address = (address, index) => {
     if (!address) return ''
@@ -65,6 +69,11 @@ const KycForm = () => {
 
     return address.split(',')[index]
   }
+  const handleMessageChange = event => {
+    setMessage(event.target.value)
+  }
+
+  const [responseMsg, setResponseMsg] = useState('')
 
   const handleInputChange = (key, e) => {
     setKyc({ ...kyc, [key]: e.target.value })
@@ -88,6 +97,38 @@ const KycForm = () => {
 
   const handleCitizenShipBack = e => {
     setCitizenShipBack(e.target.files[0])
+  }
+  const handleRequestClick = async () => {
+    try {
+      const response = await axios.post(
+        'http://localhost:8081/registration/admin-kyc-message',
+        { adminKycMessage: message, email: params.email },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      )
+      setResponseMsg(response.data.message)
+      alert(response.data.message)
+    } catch (error) {
+      setServerErrorMsg(error.message)
+    }
+  }
+
+  const handleApproveClick = async () => {
+    try {
+      const response = await axios.post(
+        'http://localhost:8081/registration/verifyKYC',
+        {
+          email: params.email
+        }
+      )
+      setResponseMsg(response.data.message)
+      alert(response.data.message)
+    } catch (error) {
+      setServerErrorMsg(error.data.error)
+    }
   }
 
   const populateForm = () => {
@@ -144,6 +185,18 @@ const KycForm = () => {
     populateForm()
   }, [])
 
+  useEffect(() => {
+    const email = localStorage.getItem('email')
+    axios
+      .get('http://localhost:8081/registration/getAdminKycMessage/' + email)
+      .then(response => {
+        setAdminKycMessage(response.data.data)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }, [])
+
   const submitKycForm = () => {
     setSubmitting(true)
 
@@ -175,6 +228,9 @@ const KycForm = () => {
     })
       .then(function (response) {
         setSubmitting(false)
+        setAdminKycMessage(
+          "Application submitted. Please wait for admin's approval"
+        )
         populateForm()
         alert('Kyc submitted successfully')
       })
@@ -187,19 +243,16 @@ const KycForm = () => {
 
   return (
     <CForm className='row g-3'>
-      {kyc.verificationStatus !== '' && (
-        <p style={{ marginBottom: '30px' }}>
-          {kyc.verificationStatus ? (
-            <span style={{ color: 'green', fontSize: '1.1em' }}>
-              Kyc Verified
-            </span>
-          ) : (
-            <span style={{ color: 'red', fontSize: '1.1em' }}>
-              Kyc Not Verified
-            </span>
-          )}
-        </p>
-      )}
+      {kyc.verificationStatus !== '' &&
+        localStorage.getItem('role') != 'ADMIN' && (
+          <p style={{ marginBottom: '30px' }}>
+            {kyc.verificationStatus ? (
+              <CAlert color='success'> Kyc Verified</CAlert>
+            ) : (
+              <CAlert color='danger'>{adminKycMessage}</CAlert>
+            )}
+          </p>
+        )}
       <h2 style={{ fontWeight: 'bold' }}>Personal Information</h2>
       <CCol md={4}>
         <CFormInput
@@ -496,18 +549,22 @@ const KycForm = () => {
           </a>
         )}
       </div>
-
-      <div className='mt-4' />
-      <div className='mb-3'>
-        <CFormLabel htmlFor='exampleFormControlTextarea1'>
-          Admin Message
-        </CFormLabel>
-        <CFormTextarea
-          id='exampleFormControlTextarea1'
-          rows={3}
-        ></CFormTextarea>
-      </div>
-
+      {localStorage.getItem('role') === 'ADMIN' && (
+        <>
+          <div className='mt-4' />
+          <div className='mb-3'>
+            <CFormLabel htmlFor='exampleFormControlTextarea1'>
+              Admin Message
+            </CFormLabel>
+            <CFormTextarea
+              id='exampleFormControlTextarea1'
+              rows={3}
+              value={message}
+              onChange={handleMessageChange}
+            ></CFormTextarea>
+          </div>
+        </>
+      )}
       <div className='mt-4' />
 
       <CCol xs={12}>
@@ -517,7 +574,7 @@ const KycForm = () => {
               className='mb-3'
               style={{ background: 'navy', marginRight: '20px' }}
               type='submit'
-              onClick={submitKycForm}
+              onClick={handleApproveClick}
             >
               APPOVE KYC
             </CButton>
@@ -525,13 +582,14 @@ const KycForm = () => {
               className='mb-3'
               style={{ background: 'navy' }}
               type='submit'
-              onClick={submitKycForm}
+              onClick={handleRequestClick}
             >
               Request for Change
             </CButton>
           </>
         )}
-
+        {serverErrorMsg && <div>{serverErrorMsg}</div>}
+        {responseMsg && <div>{responseMsg}</div>}
         {localStorage.getItem('role') === 'BORROWER' && (
           <>
             {submitting ? (

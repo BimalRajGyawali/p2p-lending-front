@@ -26,7 +26,9 @@ const UnververifiedKYCTable = ({ unverifiedKYCList }) => {
 
   return (
     <>
-      <p style={{ marginBottom: '30px', fontWeight: 'bold' }}>My Lendings</p>
+      <p style={{ marginBottom: '30px', fontWeight: 'bold' }}>
+        Unverified KYC Table
+      </p>
 
       <CTable striped>
         <CTableHead>
