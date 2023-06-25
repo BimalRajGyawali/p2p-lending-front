@@ -17,7 +17,7 @@ import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
 import { logo } from 'src/assets/brand/logo'
 import sidebarShowSlice from '../slices/SidebarShowSlice'
-import NotificationDropdown from './header/NotificationDropdown'
+import NotificationDropDown from './header/NotificationDropdown'
 
 const AppHeader = () => {
   const dispatch = useDispatch()
@@ -35,11 +35,16 @@ const AppHeader = () => {
           <CIcon icon={logo} height={48} alt='Logo' />
         </CHeaderBrand>
         <CHeaderNav className='ms-3'>
-          <p style={{ marginRight: '10px', marginTop: '5px' }}>
+          <p
+            style={{
+              marginRight: '10px',
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
             {localStorage.getItem('role')}
           </p>
-
-          <NotificationDropdown />
+          <NotificationDropDown />
           <AppHeaderDropdown />
         </CHeaderNav>
       </CContainer>

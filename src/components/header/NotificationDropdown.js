@@ -25,31 +25,41 @@ import CIcon from '@coreui/icons-react'
 
 import avatar8 from './../../assets/images/avatars/8.jpg'
 import { useNavigate } from 'react-router-dom'
-import NotificationBadge from './NotificationBadge'
 
-const NotificationDropdown = () => {
-  const itemsCount = 5 // Replace with the actual count of items
+const AppHeaderDropdown = () => {
+  const navigate = useNavigate()
+
+  const handleLogout = e => {
+    e.preventDefault()
+    console.log('logout')
+    localStorage.setItem('email', '')
+    localStorage.setItem('role', '')
+    localStorage.setItem('accessToken', '')
+
+    navigate('/login')
+  }
+
   return (
-    <CDropdown inNav className='c-header-nav-item mx-2'>
-      <CDropdownToggle className='c-header-nav-link' caret={false}>
-        <div className='notification-icon'>
-          <CIcon icon={cilBell} size='lg' />
-          <NotificationBadge count={itemsCount} />
+    <CDropdown variant='nav-item'>
+      <CDropdownToggle placement='bottom-end' className='py-0' caret={false}>
+        <div>
+          <CNavLink href='#'>
+            <CIcon icon={cilBell} size='lg' />
+          </CNavLink>
         </div>
       </CDropdownToggle>
       <CDropdownMenu className='pt-0' placement='bottom-end'>
         <CDropdownItem href='#'>
-          <CIcon icon={cilSettings} className='me-2' />
-          Profile
+          <CIcon icon={cilBell} className='me-2' />
+          hello this is notification dropdown one
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem>
-          <CIcon icon={cilLockLocked} className='me-2' />
-          Logout
+        <CDropdownItem href='#'>
+          hello this is notification dropdown one
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>
   )
 }
 
-export default NotificationDropdown
+export default AppHeaderDropdown
