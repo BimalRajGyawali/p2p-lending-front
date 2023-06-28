@@ -1,33 +1,35 @@
-import React, { Component } from 'react'
+import React, { Component } from "react"
 import {
   CTable,
   CTableHead,
   CTableRow,
   CTableHeaderCell,
   CTableBody,
-  CTableDataCell,
-} from '@coreui/react'
+  CTableDataCell
+} from "@coreui/react"
 // eslint-disable-next-line react/prop-types
 const WalletTransTable = ({ transactions }) => {
   const getStyle = (type) => {
-    if (type === 'DEBIT') {
+    if (type === "DEBIT") {
       return {
-        color: 'red',
+        color: "red"
       }
-    } else if (type === 'LOCKED') {
+    } else if (type === "LOCKED") {
       return {
-        color: 'blue',
+        color: "blue"
       }
     } else {
       return {
-        color: 'green',
+        color: "green"
       }
     }
   }
 
   return (
     <>
-      <p style={{ marginBottom: '20px', marginTop: '50px', fontWeight: 'bold' }}>
+      <p
+        style={{ marginBottom: "20px", marginTop: "50px", fontWeight: "bold" }}
+      >
         Wallet Transactions
       </p>
 
@@ -45,12 +47,18 @@ const WalletTransTable = ({ transactions }) => {
           {/* eslint-disable-next-line react/prop-types */}
           {transactions.map((trans, index) => (
             <CTableRow key={trans.id}>
-              <CTableDataCell style={getStyle(trans.type)}>{index + 1}</CTableDataCell>
               <CTableDataCell style={getStyle(trans.type)}>
-                {trans.amount && trans.amount.toLocaleString('en-Us')}
+                {index + 1}
               </CTableDataCell>
-              <CTableDataCell style={getStyle(trans.type)}>{trans.type}</CTableDataCell>
-              <CTableDataCell style={getStyle(trans.type)}>{trans.remarks}</CTableDataCell>
+              <CTableDataCell style={getStyle(trans.type)}>
+                {trans.amount && trans.amount.toLocaleString("en-Us")}
+              </CTableDataCell>
+              <CTableDataCell style={getStyle(trans.type)}>
+                {trans.type}
+              </CTableDataCell>
+              <CTableDataCell style={getStyle(trans.type)}>
+                {trans.remarks}
+              </CTableDataCell>
               <CTableDataCell style={getStyle(trans.type)}>
                 {new Date(trans.date).toLocaleString()}
               </CTableDataCell>

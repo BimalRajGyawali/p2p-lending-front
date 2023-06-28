@@ -1,8 +1,12 @@
 {
-  "trailingComma": "none",
-  "semi": false,
-  "singleQuote": true,
-  "jsxSingleQuote": true,
-  "arrowParens": "avoid",
-  "endOfLine": "auto"
+  "overrides": [
+    {
+      "files": "*.js",
+      "options": {
+        "endOfLine": "auto",
+        "trailingComma": "none",
+        "semi": false
+      }
+    }
+  ]
 }
