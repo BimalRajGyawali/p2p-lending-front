@@ -1,4 +1,4 @@
-{
+`{
   "overrides": [
     {
       "files": "*.js",
@@ -6,15 +6,15 @@
         "endOfLine": "auto",
         "trailingComma": "none",
         "semi": false,
-        "overrides": [
-          {
-            "files": "*.js",
-            "options": {
-              "singleQuote": true
-            }
-          }
-        ]
+        "singleQuote": true
+      }
+    },
+    {
+      "files": "*.json",
+      "options": {
+        "singleQuote": true
       }
     }
   ]
 }
+`

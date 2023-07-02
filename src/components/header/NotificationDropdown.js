@@ -49,15 +49,26 @@ const NotificationDropDown = ({ notifications }) => {
         </div>
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
-        {notifications.map((notification, index) => (
-          <>
-            <CDropdownItem href="#" key={index}>
+        {notifications.length > 0 ? (
+          <div>
+            {notifications.map((notification, index) => (
+              <>
+                <CDropdownItem href="#" key={index}>
+                  <CIcon icon={cilBell} className="me-2" />
+                  {notification.notificationMessage}
+                </CDropdownItem>
+                {notifications.length - 1 == index ? "" : <CDropdownDivider />}
+              </>
+            ))}
+          </div>
+        ) : (
+          <div>
+            <CDropdownItem href="#">
               <CIcon icon={cilBell} className="me-2" />
-              {notification.notificationMessage}
+              No new notifications
             </CDropdownItem>
-            {notifications.length - 1 == index ? "" : <CDropdownDivider />}
-          </>
-        ))}
+          </div>
+        )}
 
         {/* <CDropdownItem href='#'>
           hello this is notification dropdown one
