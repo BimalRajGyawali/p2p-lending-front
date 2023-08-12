@@ -9,7 +9,7 @@ import {
   CModal,
   CModalHeader,
   CModalTitle,
-  CModalBody,
+  CModalBody
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilExpandUp } from '@coreui/icons'
@@ -20,7 +20,7 @@ const MyLendingsTable = ({ lendings }) => {
   const [interests, setInterests] = useState([])
   const [modalLoading, setModalLoading] = useState(false)
 
-  const handleModalView = (lendingId) => {
+  const handleModalView = lendingId => {
     setModalLoading(true)
     const newState = !visible
 
@@ -32,18 +32,18 @@ const MyLendingsTable = ({ lendings }) => {
         method: 'post',
         url: 'http://localhost:8082/api/v1/getLendingInterests',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         },
         data: {
-          lendingId,
-        },
+          lendingId
+        }
       })
-        .then((res) => {
+        .then(res => {
           console.log(res)
           setInterests(res.data.data)
           setModalLoading(false)
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err)
           alert('Something went wrong')
           setModalLoading(false)
@@ -59,11 +59,11 @@ const MyLendingsTable = ({ lendings }) => {
       <CTable striped>
         <CTableHead>
           <CTableRow>
-            <CTableHeaderCell scope="col">#</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Amount</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Lent Date</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Status</CTableHeaderCell>
-            <CTableHeaderCell scope="col"></CTableHeaderCell>
+            <CTableHeaderCell scope='col'>#</CTableHeaderCell>
+            <CTableHeaderCell scope='col'>Amount</CTableHeaderCell>
+            <CTableHeaderCell scope='col'>Lent Date</CTableHeaderCell>
+            <CTableHeaderCell scope='col'>Status</CTableHeaderCell>
+            <CTableHeaderCell scope='col'></CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
@@ -75,11 +75,19 @@ const MyLendingsTable = ({ lendings }) => {
                 {lending.amount && lending.amount.toLocaleString('en-Us')}
               </CTableDataCell>
 
-              <CTableDataCell>{new Date(lending.lentDate).toLocaleString()}</CTableDataCell>
+              <CTableDataCell>
+                {new Date(lending.lentDate).toLocaleString()}
+              </CTableDataCell>
               <CTableDataCell>{lending.status}</CTableDataCell>
               {lending.status === 'DISBURSED' && (
-                <CTableDataCell onClick={() => handleModalView(lending.lendingId)}>
-                  <CIcon icon={cilExpandUp} style={{ cursor: 'pointer' }} title={'View Returns'} />
+                <CTableDataCell
+                  onClick={() => handleModalView(lending.lendingId)}
+                >
+                  <CIcon
+                    icon={cilExpandUp}
+                    style={{ cursor: 'pointer' }}
+                    title={'View Returns'}
+                  />
                 </CTableDataCell>
               )}
             </CTableRow>
@@ -87,20 +95,24 @@ const MyLendingsTable = ({ lendings }) => {
         </CTableBody>
       </CTable>
 
-      <CModal fullscreen="lg" visible={visible} onClose={() => setVisible(false)}>
+      <CModal
+        fullscreen='lg'
+        visible={visible}
+        onClose={() => setVisible(false)}
+      >
         <CModalHeader>
           <CModalTitle>Returns received</CModalTitle>
         </CModalHeader>
         <CModalBody>
           {modalLoading ? (
-            <div className="spinner-border" role="status"></div>
+            <div className='spinner-border' role='status'></div>
           ) : (
             <CTable striped>
               <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell scope="col">#</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Amount</CTableHeaderCell>
-                  <CTableHeaderCell scope="col"> Date</CTableHeaderCell>
+                  <CTableHeaderCell scope='col'>#</CTableHeaderCell>
+                  <CTableHeaderCell scope='col'>Amount</CTableHeaderCell>
+                  <CTableHeaderCell scope='col'> Date</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
@@ -109,9 +121,12 @@ const MyLendingsTable = ({ lendings }) => {
                   <CTableRow key={interest.id}>
                     <CTableDataCell>{index + 1}</CTableDataCell>
                     <CTableDataCell>
-                      {interest.amount && interest.amount.toLocaleString('en-Us')}
+                      {interest.amount &&
+                        interest.amount.toLocaleString('en-Us')}
                     </CTableDataCell>
-                    <CTableDataCell>{new Date(interest.date).toLocaleString()}</CTableDataCell>
+                    <CTableDataCell>
+                      {new Date(interest.date).toLocaleString()}
+                    </CTableDataCell>
                   </CTableRow>
                 ))}
               </CTableBody>

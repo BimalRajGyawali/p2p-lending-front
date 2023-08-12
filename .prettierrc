@@ -4,7 +4,15 @@
       "files": "*.js",
       "options": {
         "endOfLine": "auto",
-        "trailingComma": "none"
+        "trailingComma": "none",
+        "semi": false,
+        "singleQuote": true
+      }
+    },
+    {
+      "files": "*.json",
+      "options": {
+        "singleQuote": true
       }
     }
   ]

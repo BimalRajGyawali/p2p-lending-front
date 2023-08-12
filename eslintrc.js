@@ -1,7 +1,5 @@
-module.exports = {
-  root: true,
-  extends: '@react-native-community',
-  rules: {
-    'prettier/prettier': 0,
-  },
+const isRoot = true
+export const eslintExtends = "@react-native-community"
+export const eslintRules = {
+  "prettier/prettier": 0
 }

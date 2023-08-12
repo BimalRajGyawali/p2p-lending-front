@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { CButton, CCard, CCardBody, CCardText, CFormInput } from '@coreui/react'
-import axios from 'axios'
-import WalletTransTable from './WalletTransTable'
-import { number } from 'prop-types'
+import React, { useEffect, useState } from "react"
+import { CButton, CCard, CCardBody, CCardText, CFormInput } from "@coreui/react"
+import axios from "axios"
+import WalletTransTable from "./WalletTransTable"
+import { number } from "prop-types"
 
 const Wallet = () => {
   const [walletTotalBalance, setWalletTotalBalance] = useState(0)
@@ -13,38 +13,38 @@ const Wallet = () => {
 
   const loadWallet = () => {
     if (!loadingAmount || loadingAmount <= 0) {
-      alert('Invalid amount')
+      alert("Invalid amount")
       return
     }
     setLoadWalletButtonLoading(true)
 
     axios({
-      method: 'post',
-      url: 'http://localhost:8083/api/v1/wallet/loadBalance',
+      method: "post",
+      url: "http://localhost:8083/api/v1/wallet/loadBalance",
       data: {
-        amount: loadingAmount,
+        amount: loadingAmount
       },
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      }
     })
       .then((res) => {
-        alert('Wallet loaded successfully')
+        alert("Wallet loaded successfully")
         setLoadWalletButtonLoading(false)
       })
       .catch((err) => {
         setLoadWalletButtonLoading(false)
-        alert('Something went wrong')
+        alert("Something went wrong")
       })
   }
 
   const fetchWalletBalance = () => {
     return axios({
-      method: 'get',
-      url: 'http://localhost:8083/api/v1/wallet/getBalance',
+      method: "get",
+      url: "http://localhost:8083/api/v1/wallet/getBalance",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      }
     })
   }
 
@@ -54,11 +54,11 @@ const Wallet = () => {
 
   const fetchAllTransactions = () => {
     return axios({
-      method: 'get',
-      url: 'http://localhost:8083/api/v1/wallet/getAllTransactions',
+      method: "get",
+      url: "http://localhost:8083/api/v1/wallet/getAllTransactions",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      }
     })
   }
 
@@ -78,30 +78,38 @@ const Wallet = () => {
       <CCard>
         <CCardBody>
           <CCardText>
-            <div style={{ overflow: 'auto', marginBottom: '80px' }}>
-              <div style={{ width: '50%', float: 'left' }}>
-                <h2 style={{ fontWeight: 'bold', marginBottom: '20px' }}>Wallet Summary</h2>
-                <p style={{ marginBottom: '15px' }}>
+            <div style={{ overflow: "auto", marginBottom: "80px" }}>
+              <div style={{ width: "50%", float: "left" }}>
+                <h2 style={{ fontWeight: "bold", marginBottom: "20px" }}>
+                  Wallet Summary
+                </h2>
+                <p style={{ marginBottom: "15px" }}>
                   Total Balance: &nbsp;&nbsp;
-                  <strong>Rs. {walletTotalBalance.toLocaleString('en-Us')} </strong>
+                  <strong>
+                    Rs. {walletTotalBalance.toLocaleString("en-Us")}{" "}
+                  </strong>
                 </p>
                 <p>
                   Available Balance: &nbsp;&nbsp;
-                  <strong>Rs. {walletAvailableBalance.toLocaleString('en-Us')} </strong>
+                  <strong>
+                    Rs. {walletAvailableBalance.toLocaleString("en-Us")}{" "}
+                  </strong>
                 </p>
               </div>
-              <div style={{ width: '50%', float: 'left' }}>
-                <h2 style={{ fontWeight: 'bold', marginBottom: '20px' }}>Wallet Load</h2>
+              <div style={{ width: "50%", float: "left" }}>
+                <h2 style={{ fontWeight: "bold", marginBottom: "20px" }}>
+                  Wallet Load
+                </h2>
                 <CFormInput
-                  type={'number'}
+                  type={"number"}
                   placeholder="Amount to load"
-                  style={{ width: '200px', display: 'inline' }}
+                  style={{ width: "200px", display: "inline" }}
                   onChange={handleLoadAmountChange}
                 ></CFormInput>
 
                 <CButton
                   onClick={loadWallet}
-                  style={{ backgroundColor: 'navy' }}
+                  style={{ backgroundColor: "navy" }}
                   className="ml-3"
                   active
                   tabIndex={-1}
@@ -124,10 +132,10 @@ const Wallet = () => {
             ) : (
               <p
                 style={{
-                  marginBottom: '20px',
-                  fontSize: '0.9em',
-                  fontStyle: 'italic',
-                  marginTop: '50px',
+                  marginBottom: "20px",
+                  fontSize: "0.9em",
+                  fontStyle: "italic",
+                  marginTop: "50px"
                 }}
               >
                 Wallet Transactions will appear here

@@ -7,7 +7,7 @@ import {
   CDropdownHeader,
   CDropdownItem,
   CDropdownMenu,
-  CDropdownToggle,
+  CDropdownToggle
 } from '@coreui/react'
 import {
   cilBell,
@@ -18,7 +18,7 @@ import {
   cilLockLocked,
   cilSettings,
   cilTask,
-  cilUser,
+  cilUser
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
@@ -28,7 +28,7 @@ import { useNavigate } from 'react-router-dom'
 const AppHeaderDropdown = () => {
   const navigate = useNavigate()
 
-  const handleLogout = (e) => {
+  const handleLogout = e => {
     e.preventDefault()
     console.log('logout')
     localStorage.setItem('email', '')
@@ -39,8 +39,8 @@ const AppHeaderDropdown = () => {
   }
 
   return (
-    <CDropdown variant="nav-item">
-      <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
+    <CDropdown variant='nav-item'>
+      <CDropdownToggle placement='bottom-end' className='py-0' caret={false}>
         <div
           style={{
             borderRadius: '50%',
@@ -49,19 +49,21 @@ const AppHeaderDropdown = () => {
             height: '30px',
             width: '30px',
             textAlign: 'center',
+            lineHeight: '30px'
           }}
         >
-          {localStorage.getItem('email') && localStorage.getItem('email').charAt(0).toUpperCase()}
+          {localStorage.getItem('email') &&
+            localStorage.getItem('email').charAt(0).toUpperCase()}
         </div>
       </CDropdownToggle>
-      <CDropdownMenu className="pt-0" placement="bottom-end">
-        <CDropdownItem href="#">
-          <CIcon icon={cilSettings} className="me-2" />
+      <CDropdownMenu className='pt-0' placement='bottom-end'>
+        <CDropdownItem href='#'>
+          <CIcon icon={cilSettings} className='me-2' />
           Profile
         </CDropdownItem>
         <CDropdownDivider />
         <CDropdownItem onClick={handleLogout}>
-          <CIcon icon={cilLockLocked} className="me-2" />
+          <CIcon icon={cilLockLocked} className='me-2' />
           Logout
         </CDropdownItem>
       </CDropdownMenu>
