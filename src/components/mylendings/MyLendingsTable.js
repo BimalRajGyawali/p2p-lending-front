@@ -125,7 +125,7 @@ const MyLendingsTable = ({ lendings }) => {
                         interest.amount.toLocaleString('en-Us')}
                     </CTableDataCell>
                     <CTableDataCell>
-                      {interest.date}
+                      {new Date(interest.date).toLocaleString()}
                     </CTableDataCell>
                   </CTableRow>
                 ))}
