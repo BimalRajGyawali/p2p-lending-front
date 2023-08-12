@@ -34,7 +34,7 @@ import Toasts from './views/notifications/toasts/Toasts'
 import Widgets from './views/widgets/Widgets'
 import KycForm from './components/kyc/KycForm'
 import LoanRequestPage from './components/loanRequest/LoanRequestPage'
-import LoanSuggestionList from './components/lendingSuggestions/LoanSuggestionList'
+import LendView from './components/lendingSuggestions/LendView'
 import LoanSuggestionItem from './components/lendingSuggestions/LoanSuggestionItem'
 import Wallet from './components/wallet/Wallet'
 import MyLendings from './components/mylendings/MyLendings'
@@ -108,10 +108,15 @@ const routes = [
   { path: '/kyc/:email', name: 'KycAdmin', element: KycForm },
 
   { path: '/loanRequest', name: 'LoanRequest', element: LoanRequestPage },
+  // {
+  //   path: '/loanSuggestions',
+  //   name: 'Loan Suggestions',
+  //   element: LoanSuggestionList
+  // },
   {
-    path: '/loanSuggestions',
-    name: 'Loan Suggestions',
-    element: LoanSuggestionList
+    path: '/lend',
+    name: 'Lend',
+    element: LendView
   },
   {
     path: '/singleSuggestion',
