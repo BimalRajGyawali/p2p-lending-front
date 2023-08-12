@@ -104,7 +104,7 @@ const Login = () => {
                     <CRow>
                       <CCol xs={6}>
                         <Link to='/forgot-password'>
-                          <h1 className='mt-4 text-red-500 cursor-pointer'>
+                          <h1 className='mt-4 cursor-pointer' style={{textDecoration:"underline"}}>
                             Forgot password?
                           </h1>
                         </Link>
@@ -119,10 +119,13 @@ const Login = () => {
               >
                 <CCardBody className='text-center'>
                   <div>
-                    <h2>Sign up</h2>
+                    <h2 style={{fontWeight: "bold", fontSize: "1.2em"}} className="mb-3">Sign up</h2>
                     <p>
                       Be a borrower for hassle free loan with best interest
-                      rates. Be a lender for lending at higher rates.
+                      rates.
+                    </p>
+                    <p>
+                      Be a lender for lending at higher rates.
                     </p>
                     <Link to='/register'>
                       <CButton
