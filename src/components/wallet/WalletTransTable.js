@@ -9,6 +9,14 @@ import {
 } from "@coreui/react"
 // eslint-disable-next-line react/prop-types
 const WalletTransTable = ({ transactions }) => {
+  const options = {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  };
   const getStyle = (type) => {
     if (type === "DEBIT") {
       return {
@@ -42,30 +50,31 @@ const WalletTransTable = ({ transactions }) => {
           <CTableRow>
             <CTableHeaderCell scope="col">#</CTableHeaderCell>
             <CTableHeaderCell scope="col">Amount</CTableHeaderCell>
-            <CTableHeaderCell scope="col">Type</CTableHeaderCell>
             <CTableHeaderCell scope="col">Remarks</CTableHeaderCell>
             <CTableHeaderCell scope="col">Date</CTableHeaderCell>
+            <CTableHeaderCell scope="col">Type</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
         <CTableBody>
           {/* eslint-disable-next-line react/prop-types */}
           {sortedTransactions.map((trans, index) => (
             <CTableRow key={trans.id}>
-              <CTableDataCell style={getStyle(trans.type)}>
+              <CTableDataCell>
                 {index + 1}
               </CTableDataCell>
-              <CTableDataCell style={getStyle(trans.type)}>
-                {trans.amount && trans.amount.toLocaleString("en-Us")}
+              <CTableDataCell>
+                {trans.amount && trans.amount.toLocaleString("en-us")}
+              </CTableDataCell>
+              <CTableDataCell>
+                {trans.remarks}
+              </CTableDataCell>
+              <CTableDataCell>
+                {new Date(trans.date).toLocaleString("en-us", options)}
               </CTableDataCell>
               <CTableDataCell style={getStyle(trans.type)}>
                 {trans.type}
               </CTableDataCell>
-              <CTableDataCell style={getStyle(trans.type)}>
-                {trans.remarks}
-              </CTableDataCell>
-              <CTableDataCell style={getStyle(trans.type)}>
-                {new Date(trans.date).toLocaleString()}
-              </CTableDataCell>
+
             </CTableRow>
           ))}
         </CTableBody>

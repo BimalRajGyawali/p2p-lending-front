@@ -32,7 +32,7 @@ const AppContent = () => {
           {localStorage.getItem("role") === "LENDER" && (
             <Route
               path="/"
-              element={<Navigate to="loanSuggestions" replace />}
+              element={<Navigate to="lenderWallet" replace />}
             />
           )}
           {localStorage.getItem("role") === "ADMIN" && (
