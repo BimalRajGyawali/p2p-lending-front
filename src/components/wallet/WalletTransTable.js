@@ -25,6 +25,10 @@ const WalletTransTable = ({ transactions }) => {
     }
   }
 
+  const sortedTransactions = transactions.sort(
+    (a, b) => new Date(b.date) - new Date(a.date)
+  );
+
   return (
     <>
       <p
@@ -45,7 +49,7 @@ const WalletTransTable = ({ transactions }) => {
         </CTableHead>
         <CTableBody>
           {/* eslint-disable-next-line react/prop-types */}
-          {transactions.map((trans, index) => (
+          {sortedTransactions.map((trans, index) => (
             <CTableRow key={trans.id}>
               <CTableDataCell style={getStyle(trans.type)}>
                 {index + 1}

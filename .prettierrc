@@ -1,19 +1,6 @@
 {
-  "overrides": [
-    {
-      "files": "*.js",
-      "options": {
-        "endOfLine": "auto",
-        "trailingComma": "none",
-        "semi": false,
-        "singleQuote": true
-      }
-    },
-    {
-      "files": "*.json",
-      "options": {
-        "singleQuote": true
-      }
-    }
-  ]
+  "semi": false,
+  "trailingComma": "all",
+  "printWidth": 80,
+  "tabWidth": 3
 }

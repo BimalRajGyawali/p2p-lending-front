@@ -70,6 +70,7 @@ const Wallet = () => {
 
     fetchAllTransactions().then((res) => {
       setTransactions(res.data.data)
+      console.log(res.data.data)
     })
   }, [loadWalletButtonLoading])
 
