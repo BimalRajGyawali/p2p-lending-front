@@ -105,7 +105,6 @@ const Wallet = () => {
                   type={"number"}
                   placeholder="Amount to load"
                   style={{ width: "200px", display: "inline" }}
-                  min={0}
                   onChange={handleLoadAmountChange}
                 ></CFormInput>
 

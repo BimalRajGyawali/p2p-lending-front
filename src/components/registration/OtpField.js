@@ -58,10 +58,10 @@ export default function OtpField() {
         <div className="flex flex-col ">
           <div className="flex-1 w-full mx-2">
             <p className="mb-4 text-red-500">{serverErrorMsg}</p>
-            <div className="h-6 mt-3 mb-3 text-xs font-bold leading-8 text-gray-500 uppercase">
+            <div className="h-6 mt-3 text-xs font-bold leading-8 text-gray-500 uppercase">
               Verification
             </div>
-            <p className="my-1">An OTP is sent to your email. Please enter it here.</p>
+            <p className="my-1">An OTP is sent to your email. Please enter it here. {email}</p>
             <div className="flex p-1 my-2 bg-white border border-gray-200 rounded">
               <input
                 onChange={handleChange}

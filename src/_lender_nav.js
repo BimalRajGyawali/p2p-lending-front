@@ -4,24 +4,17 @@ import { cilLightbulb, cilMoney, cilWallet,cilChartLine } from '@coreui/icons'
 import { CNavItem } from '@coreui/react'
 
 const _lender_nav = [
-  // {
-  //   component: CNavItem,
-  //   name: 'Loan Suggestions',
-  //   to: '/loanSuggestions',
-  //   icon: <CIcon icon={cilLightbulb} customClassName='nav-icon' />
-  // },
-
+  {
+    component: CNavItem,
+    name: 'Loan Suggestions',
+    to: '/loanSuggestions',
+    icon: <CIcon icon={cilLightbulb} customClassName='nav-icon' />
+  },
   {
     component: CNavItem,
     name: 'Wallet',
     to: '/lenderWallet',
     icon: <CIcon icon={cilWallet} customClassName='nav-icon' />
-  },
-  {
-    component: CNavItem,
-    name: 'Lend',
-    to: '/lend',
-    icon: <CIcon icon={cilLightbulb} customClassName='nav-icon' />
   },
   {
     component: CNavItem,

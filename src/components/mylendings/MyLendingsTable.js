@@ -76,7 +76,7 @@ const MyLendingsTable = ({ lendings }) => {
               </CTableDataCell>
 
               <CTableDataCell>
-                {lending.lentDate}
+                {new Date(lending.lentDate).toLocaleString()}
               </CTableDataCell>
               <CTableDataCell>{lending.status}</CTableDataCell>
               {lending.status === 'DISBURSED' && (
