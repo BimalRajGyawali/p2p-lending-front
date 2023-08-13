@@ -78,11 +78,11 @@ export default function EmailField() {
         <div className="flex flex-col ">
           <div className="flex-1 w-full mx-2">
             <p>
-              Already have an account ? <Link to={'/login'}>Login Here</Link>
+              Already have an account ? <Link to={'/login'} style={{textDecoration: "underline"}}>Login Here</Link>
             </p>
             <p className="mb-4 text-red-500">{serverErrorMsg}</p>
 
-            <div className="h-6 mt-3 text-xs font-bold leading-8 text-gray-500 uppercase">
+            <div className="h-6 mt-3 mb-3 text-xs font-bold leading-8 text-gray-500 uppercase">
               Register As
             </div>
 
