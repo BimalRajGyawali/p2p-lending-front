@@ -572,15 +572,15 @@ const KycForm = () => {
           <>
             <CButton
               className='mb-3'
-              style={{ background: 'navy', marginRight: '20px' }}
+              style={{ background: 'green', marginRight: '20px' }}
               type='submit'
               onClick={handleApproveClick}
             >
-              APPOVE KYC
+              Approve KYC
             </CButton>
             <CButton
               className='mb-3'
-              style={{ background: 'navy' }}
+              style={{ background: 'red' }}
               type='submit'
               onClick={handleRequestClick}
             >
@@ -609,7 +609,9 @@ const KycForm = () => {
                 style={{ background: 'navy' }}
                 type='submit'
                 onClick={submitKycForm}
-              >
+
+              
+                    >
                 Submit
               </CButton>
             )}

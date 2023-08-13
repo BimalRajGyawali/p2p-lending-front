@@ -40,6 +40,7 @@ import Wallet from './components/wallet/Wallet'
 import MyLendings from './components/mylendings/MyLendings'
 import ViewInstallments from './components/repayment/ViewInstallments'
 import UnverifiedKYCList from './components/kyc/UnverifiedKYCList'
+import LenderReport from './components/reports/LenderReport'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -126,6 +127,7 @@ const routes = [
   { path: '/lenderWallet', name: 'Wallet', element: Wallet },
   { path: '/borrowerWallet', name: 'Wallet', element: Wallet },
   { path: '/lendings', name: 'My Lendings', element: MyLendings },
+  { path: '/reports', name: 'Lender Report', element: LenderReport },
   {
     path: '/unverifiedKYC',
     name: 'unverified KYC',
